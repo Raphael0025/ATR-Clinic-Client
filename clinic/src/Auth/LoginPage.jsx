@@ -7,7 +7,7 @@ const LoginPage = () => {
     const navigate = useNavigate();
     
     const handleSubmit = () => {
-        navigate('/admin/dashboard');
+        navigate('/admin/dashboard')
     }
 
     return (
