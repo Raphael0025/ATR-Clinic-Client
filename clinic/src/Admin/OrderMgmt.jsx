@@ -10,7 +10,7 @@ const OrderMgmt = () => {
     useEffect(() => {
         const fetchProducts = async () => {
         try {
-            const response = await fetch('/api/ordering');
+            const response = await fetch('https://clinic-api-two.vercel.app/api/ordering');
             const json = await response.json();
 
             if (response.ok) {

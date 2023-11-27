@@ -14,7 +14,7 @@ const NewsFeedPage = () => {
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-            const response = await fetch('/api/articles');
+            const response = await fetch('https://clinic-api-two.vercel.app/api/articles');
             const json = await response.json();
     
             if (response.ok) {

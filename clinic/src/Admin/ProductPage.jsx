@@ -11,7 +11,7 @@ const ProductPage = () => {
     useEffect(() => {
         const fetchProducts = async () => {
         try {
-            const response = await fetch('/api/products');
+            const response = await fetch('https://clinic-api-two.vercel.app/api/products');
             const json = await response.json();
 
             if (response.ok) {
