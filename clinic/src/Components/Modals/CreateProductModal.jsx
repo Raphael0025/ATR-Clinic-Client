@@ -21,7 +21,7 @@ const CreateProductModal = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         // Add your form submission logic here using formData
-        const response = await fetch('/api/products', {
+        const response = await fetch('https://clinic-api-two.vercel.app/api/products', {
             method: 'POST',
             body: JSON.stringify(formData),
             headers: {
