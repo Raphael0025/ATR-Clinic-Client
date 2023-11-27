@@ -7,6 +7,7 @@ import { useNavigate  } from 'react-router-dom';
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import { format } from 'date-fns';
+import { FacebookShareButton } from "react-share";
 
 const Update = () => {
   const navigate = useNavigate()
@@ -61,7 +62,9 @@ const Update = () => {
                 </div>
                 <div className='gap-3 d-flex pt-4'>
                   <button className='btn btn-outline-success' onClick={handleSubmit}><BsBookFill /> Read</button>
-                  <button className='btn btn-outline-success'><BiShare className='flip' /> Share</button>
+                  <FacebookShareButton url={`https://atr-clinic-client.vercel.app/newsfeed`} quote={'Check what`s Latest'} hashtag={'#ATRSkinCareClinic'}>
+                    <button className='btn btn-outline-success'><BiShare className='flip' /> Share</button>
+                  </FacebookShareButton>
                 </div>
               </div>
             </div>
