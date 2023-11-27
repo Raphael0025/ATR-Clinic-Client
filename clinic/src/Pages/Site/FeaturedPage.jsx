@@ -44,7 +44,7 @@ const FeaturedPage = () => {
                 ) : (
                   // Display actual data once fetched
                   products && products.map((product) => (
-                    <CardItem data={product} key={product._id} />
+                    <CardItem data={product} key={product._id} height={'400px'} />
                   ))
                 )}  
                 </div>

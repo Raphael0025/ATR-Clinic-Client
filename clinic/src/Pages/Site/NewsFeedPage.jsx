@@ -5,6 +5,7 @@ import { GradientHeader } from 'Components'
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import { format } from 'date-fns';
+import { FacebookShareButton } from "react-share";
 
 const NewsFeedPage = () => {
     const [news, setNews] = useState(null)
@@ -30,6 +31,9 @@ const NewsFeedPage = () => {
         fetchProducts()
     }, [])
 
+    const shareUrl = 'https://www.facebook.com/RpB.Isla'; // Replace with the actual URL of your article
+    const quote = `${'Hello World'}\n\n${'hello world small caps'}`; // Include both title and description
+  
     return (
         <main className='container-fluid pt-5 mt-5 p-0 m-0 overflow-y-auto'>
             <header>
@@ -55,7 +59,11 @@ const NewsFeedPage = () => {
                             <p className='mt-3 py-4 pt-0 px-3 text-wrap'>{post.description}</p>
                         </div>
                         <div className='d-flex justify-content-end container'>
-                            <button className='border-light px-4 btn btn-success'><BiShare className='flip' />Share</button>
+                        <FacebookShareButton url={`https://clinic-api-two.vercel.app/api/articles/${post._id}`} quote={post.title} hashtag={'#ATRSkinCareClinic'}>
+                            <button className='border-light px-4 btn btn-success'>
+                                <BiShare className='flip' /> Share on Facebook
+                            </button>
+                        </FacebookShareButton>
                         </div>
                     </article>
                 ))}

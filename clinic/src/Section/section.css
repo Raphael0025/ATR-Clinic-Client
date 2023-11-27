@@ -40,11 +40,11 @@
     display: grid;
     grid-template-columns: repeat(3, 1fr);
 }
-.card{
+.item-card{
     transition: all 0.3s ease-in-out;
     box-shadow: 5px 10px 1px var(--black);
 }
-.card:hover{
+.item-card:hover{
     transform: translateY(-10px) translateX(-5px);
     box-shadow: 10px 20px 1px var(--black);
 }

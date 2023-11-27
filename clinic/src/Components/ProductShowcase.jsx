@@ -20,7 +20,7 @@ const ProductShowcase = ({productData}) => {
         <div className='container p-3'>
             <Slider {...settings}>
             {productData && productData.map((product) => (
-                <CardItem key={product._id} data={product} />
+                <CardItem key={product._id} data={product} height={'280px'}/>
             ))}
             </Slider>
         </div>

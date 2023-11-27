@@ -7,6 +7,27 @@ const getArticles = async (req, res) => {
     res.status(200).json(articles)
 }
 
+// Get Single Article
+const getArticleById = async (req, res) => {
+    const { id } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(404).json({ error: 'Invalid article ID' });
+    }
+
+    try {
+        const article = await Article.findById(id);
+
+        if (!article) {
+            return res.status(404).json({ error: 'Article not found' });
+        }
+
+        res.status(200).json(article);
+    } catch (error) {
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+}
+
 // Get Top Products
 const getLatest = async (req, res) => {
     try {
@@ -60,4 +81,4 @@ const deleteArticle = async (req, res) => {
     res.status(200).json(articles)
 }
 
-module.exports = { getArticles, getLatest, deleteArticle, updateArticle, createArticle }
+module.exports = { getArticles, getArticleById, getLatest, deleteArticle, updateArticle, createArticle }
