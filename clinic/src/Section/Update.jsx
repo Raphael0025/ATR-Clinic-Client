@@ -17,7 +17,7 @@ const Update = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch('/api/articles/latest');
+        const response = await fetch('https://clinic-api-two.vercel.app/api/articles/latest');
         const json = await response.json();
 
         if (response.ok) {
