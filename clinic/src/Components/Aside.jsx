@@ -16,49 +16,49 @@ const Aside = ({ props }) => {
             </div>
             <ul className='list-unstyled d-flex flex-column gap-3'>
                 <li className={`list-itm ${item === 'dashboard' ? 'list-active' : ''} px-2 py-2 rounded-2`} onClick={() => handleActiveItem('dashboard', setItem)}>
-                    <Link to='dashboard'  className='gap-2 text-decoration-none d-flex align-items-center fw-medium'>
+                    <Link to='/dashboard'  className='gap-2 text-decoration-none d-flex align-items-center fw-medium'>
                         <IconPark path={iconPath(item, 'dashboard', 'ph:stack-fill', 'ph:stack')} size={30} />
                         Dashboard
                     </Link>
                 </li>
                 <li className={`list-itm ${item === 'product' ? 'list-active' : ''} px-2 py-2 rounded-2`} onClick={() => handleActiveItem('product', setItem)}>
-                    <Link to='products' className='gap-2 text-decoration-none d-flex align-items-center fw-medium'>
+                    <Link to='/products' className='gap-2 text-decoration-none d-flex align-items-center fw-medium'>
                         <IconPark path={iconPath(item, 'product', 'ic:round-dashboard', 'radix-icons:dashboard')} size={30} />
                         Products
                     </Link>
                 </li>
                 <li className={`list-itm ${item === 'customer' ? 'list-active' : ''} px-2 py-2 rounded-2`} onClick={() => handleActiveItem('customer', setItem)}>
-                    <Link to='customer-management' className='gap-2 text-decoration-none d-flex align-items-center fw-medium'>
+                    <Link to='/customer-management' className='gap-2 text-decoration-none d-flex align-items-center fw-medium'>
                         <IconPark path={iconPath(item, 'customer', 'ph:users-fill', 'ph:users-bold')} size={30} />
                         Customers
                     </Link>
                 </li>
                 <li className={`list-itm ${item === 'order' ? 'list-active' : ''} px-2 py-2 rounded-2`} onClick={() => handleActiveItem('order', setItem)}>
-                    <Link to='order-management' className='gap-2 text-decoration-none d-flex align-items-center fw-medium'>
+                    <Link to='/order-management' className='gap-2 text-decoration-none d-flex align-items-center fw-medium'>
                         <IconPark path={iconPath(item, 'order', 'mdi:cart', 'mdi:cart-outline')} size={30} />
                         Orders
                     </Link>
                 </li>
                 <li className={`list-itm ${item === 'pre-order' ? 'list-active' : ''} px-2 py-2 rounded-2`} onClick={() => handleActiveItem('pre-order', setItem)}>
-                    <Link to='pre-order' className='gap-2 text-decoration-none d-flex align-items-center fw-medium'>
+                    <Link to='/pre-order' className='gap-2 text-decoration-none d-flex align-items-center fw-medium'>
                         <IconPark path={iconPath(item, 'pre-order', 'solar:cart-bold', 'solar:cart-linear')} size={30} />
                         Pre-Order
                     </Link>
                 </li>
                 <li className={`list-itm ${item === 'history' ? 'list-active' : ''} px-2 py-2 rounded-2`} onClick={() => handleActiveItem('history', setItem)}>
-                    <Link to='history' className='gap-2 text-decoration-none d-flex align-items-center fw-medium'>
+                    <Link to='/history' className='gap-2 text-decoration-none d-flex align-items-center fw-medium'>
                         <IconPark path={iconPath(item, 'history', 'uim:history', 'lucide:history')} size={30} />
                         Order history
                     </Link>
                 </li>
                 <li className={`list-itm ${item === 'content' ? 'list-active' : ''} px-2 py-2 rounded-2`} onClick={() => handleActiveItem('content', setItem)}>
-                    <Link to='content-management' className='gap-2 text-decoration-none d-flex align-items-center fw-medium'>
+                    <Link to='/content-management' className='gap-2 text-decoration-none d-flex align-items-center fw-medium'>
                         <IconPark path={iconPath(item, 'content', 'iconamoon:delivery-fill', 'iconamoon:delivery')} size={30} />
                         Manage Website
                     </Link>
                 </li>
                 <li className={`list-itm ${item === 'profile' ? 'list-active' : ''} px-2 py-2 rounded-2`} onClick={() => handleActiveItem('profile', setItem)}>
-                    <Link to='profile' className='gap-2 text-decoration-none d-flex align-items-center fw-medium'>
+                    <Link to='/profile' className='gap-2 text-decoration-none d-flex align-items-center fw-medium'>
                         <IconPark path={iconPath(item, 'profile', 'mingcute:user-4-fill', 'mingcute:user-4-line')} size={30} />
                         Profile
                     </Link>
