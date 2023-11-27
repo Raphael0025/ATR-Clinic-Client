@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { GradientHeader } from 'Components';
-import Skeleton from 'react-loading-skeleton';
 import { IconPark } from 'assets/SvgIcons';
 import { useItems } from 'Context/ItemsContext';
 import { useNavigate } from 'react-router-dom';
 
 const ConfirmOrder = () => {
-    const [loading, setLoading] = useState(true)
     const { items, resetItems } = useItems()
     const navigate = useNavigate()
     const [itemStates, setItemStates] = useState({
