@@ -59,7 +59,7 @@ const NewsFeedPage = () => {
                             <p className='mt-3 py-4 pt-0 px-3 text-wrap'>{post.description}</p>
                         </div>
                         <div className='d-flex justify-content-end container'>
-                        <FacebookShareButton url={`https://clinic-api-two.vercel.app/api/articles/${post._id}`} quote={post.title} hashtag={'#ATRSkinCareClinic'}>
+                        <FacebookShareButton url={`https://clinic-api-two.vercel.app/newsfeed`} quote={'Check what`s Latest'} hashtag={'#ATRSkinCareClinic'}>
                             <button className='border-light px-4 btn btn-success'>
                                 <BiShare className='flip' /> Share on Facebook
                             </button>
