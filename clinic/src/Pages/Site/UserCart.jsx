@@ -149,6 +149,7 @@ const UserCart = () => {
                         <span className='w-100 m-0 text-center fw-bold ps-5'>Unit Price</span>
                         <span className='w-100 m-0 text-center fw-bold pe-4'>Quantity</span>
                         <span className='w-100 m-0 text-start fw-bold pe-4'>Sub-Total</span>
+                        <span className='w-100 m-0 text-center fw-bold pe-5'>Courier</span>
                         <span className='w-100 m-0 text-center fw-bold pe-5'>Shipping</span>
                     </div>
                     <div className='py-3 pe-0 px-0 d-flex gap-3 flex-column rounded-3 overflow-y-scroll' style={{height: '500px'}}>
@@ -172,6 +173,7 @@ const UserCart = () => {
                                             <button type='button' className='btn btn-sm btn-outline-secondary' onClick={() => handleIncrease(item._id)} ><IconPark path={'ic:round-plus'} /></button>
                                         </div>
                                         <span className='m-0 w-100 text-center'>Php {item.product.unit_price * item.qty}.00</span>
+                                        <span className='m-0 w-100 text-center'>{item.courier}</span>
                                         <span className='m-0 w-100 text-center text-success'>{item.shipping} <IconPark size={24} path={item.shipping === 'For Delivery' ? 'tabler:truck-delivery' : 'icon-park-outline:delivery'} /></span>
                                         <button type='button' className='btn btn-sm btn-outline-danger' onClick={() => handleDeleteItem(item._id)}>
                                             Delete

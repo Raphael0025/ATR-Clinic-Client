@@ -100,7 +100,7 @@ const AddToCart = () => {
                                         {itemData.qty === 0 ? (<pre className='text-danger fst-italic m-0'>*Out of Stock</pre>) : ''}
                                     </div>
                                     <div className='d-flex gap-2 w-100'>
-                                        <button type='button' onClick={() => setItem({...item, shipping: 'For Pick-up'})} className={`w-100 btn ${item.shipping === 'For Pick-up' ? 'btn-success' : 'btn-outline-success'} btn-sm`}>For Pick-up</button>
+                                        <button type='button' onClick={() => setItem({...item, shipping: 'For Pick-up', courier: 'None'})} className={`w-100 btn ${item.shipping === 'For Pick-up' ? 'btn-success' : 'btn-outline-success'} btn-sm`}>For Pick-up</button>
                                         <button type='button' onClick={() => setItem({...item, shipping: 'For Delivery'})} className={`w-100 btn ${item.shipping === 'For Delivery' ? 'btn-success' : 'btn-outline-success'} btn-sm`}>For Delivery</button>
                                     </div>
                                     { item.shipping === 'For Delivery' 
