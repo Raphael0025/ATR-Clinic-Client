@@ -100,6 +100,21 @@ const AddToCart = () => {
                                         <button type='button' onClick={() => setItem({...item, shipping: 'For Pick-up'})} className={`w-100 btn ${item.shipping === 'For Pick-up' ? 'btn-success' : 'btn-outline-success'} btn-sm`}>For Pick-up</button>
                                         <button type='button' onClick={() => setItem({...item, shipping: 'For Delivery'})} className={`w-100 btn ${item.shipping === 'For Delivery' ? 'btn-success' : 'btn-outline-success'} btn-sm`}>For Delivery</button>
                                     </div>
+                                    { item.shipping === 'For Delivery' 
+                                    ? <>
+                                        <div className='d-flex flex-column gap-2 w-100'>
+                                            <h6>Select Delivery Option:</h6>
+                                            <button type='button' className={`w-100 btn ${item.shipping === 'For Pick-up' ? 'btn-success' : 'btn-outline-success'} btn-sm`}>Toktok</button>
+                                            <button type='button' className={`w-100 btn ${item.shipping === 'For Delivery' ? 'btn-success' : 'btn-outline-success'} btn-sm`}>Lalamove</button>
+                                            <button type='button' className={`w-100 btn ${item.shipping === 'For Pick-up' ? 'btn-success' : 'btn-outline-success'} btn-sm`}>Angkas</button>
+                                            <button type='button' className={`w-100 btn ${item.shipping === 'For Delivery' ? 'btn-success' : 'btn-outline-success'} btn-sm`}>Grab</button>
+                                        </div>
+                                    </>
+                                    :
+                                    <>
+                                        <p className='text-danger fst-italic' style={{fontSize: '12px'}}>*Orders labeled 'For Pick-Up' must be claimed within 2 days to avoid cancellation.</p>
+                                    </>
+                                    }
                                 </div>
                             </div>
                             <div className='py-2 px-0 d-flex flex-column modal-footer gap-2'>
