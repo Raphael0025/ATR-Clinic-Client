@@ -2,10 +2,12 @@ import React, { useState, useEffect } from 'react'
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import { CreateProductModal } from 'Components' 
+import { IconPark } from 'assets/SvgIcons'
 
 const ProductPage = () => {
     const [products, setProducts] = useState(null)
     const [loading, setLoading] = useState(true)
+    const [count, setCount] = useState(0)
 
     // Fetching Data from Database
     useEffect(() => {
@@ -27,6 +29,26 @@ const ProductPage = () => {
         fetchProducts()
     }, [])
 
+    // Fetching Data from Database
+    useEffect(() => {
+        const fetchCount = async () => {
+        try {
+            const response = await fetch('https://clinic-api-two.vercel.app/api/products/count');
+            const json = await response.json()
+
+            if (response.ok) {
+                setCount(json.totalUsers)
+            }
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        } finally {
+            // Set loading to false once data is fetched
+            setLoading(false);
+        }
+        };
+        fetchCount()
+    }, [])
+
     return (
         <main id='product' className=' container-fluid '> 
             <section className='opaque-background rounded-2 container px-3 py-4 d-flex flex-column gap-4'> 
@@ -39,7 +61,7 @@ const ProductPage = () => {
                     <div className='d-flex gap-4 border-bottom border-warning border-5 py-4 mb-4'>
                         <div className='py-4 col-3 px-5 text-light rounded-3 d-flex flex-column ' style={{backgroundColor: '#FFFFFF80'}}>
                             <h6>Total Products</h6>
-                            <span className='w-100 text-end fs-3 fw-bold'>150</span>
+                            <span className='w-100 text-end fs-3 fw-bold'>{count}</span>
                         </div>
                     </div>
                     <div className='rounded-3 p-3' style={{backgroundColor: '#B2B2B280', fontSize: '12px'}}>
@@ -68,7 +90,16 @@ const ProductPage = () => {
                                     <span className='w-100'>{product.qty} pcs</span>
                                     <span className='w-100'>Php {product.unit_price}</span>
                                     <span className='w-100'>Php {product.soldCount * product.unit_price}</span>
-                                    <span className='w-100'>Php {product.soldCount * product.unit_price}</span>
+                                    <span className='w-100' style={{fontSize: '12px'}} role='cell'>
+                                        <button className='btn btn-sm text-dark-subtle'>  
+                                            <IconPark path={'akar-icons:edit'} size={23} />
+                                        </button>
+                                        <button className='btn btn-sm text-dark-subtle' 
+                                        //onClick={() => onDelete(data)}
+                                        >  
+                                            <IconPark path={'mdi:trash-can-outline'} size={23} />
+                                        </button>
+                                    </span>
                                 </div>
                             ))}
                             </>

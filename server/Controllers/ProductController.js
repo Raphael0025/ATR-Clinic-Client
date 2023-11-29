@@ -7,6 +7,16 @@ const getProducts = async (req, res) => {
     res.status(200).json(products)
 }
 
+// API function to count total documents in the User collection
+const countProducts = async (req, res) => {
+    try {
+        const totalUsers = await Product.countDocuments({});
+        res.status(200).json({ totalUsers });
+    } catch (error) {
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+}
+
 // get single user
 const getProductId = async (req, res) => {
     const { id } = req.params
@@ -74,4 +84,4 @@ const deleteProduct = async (req, res) => {
     res.status(200).json(product)
 }
 
-module.exports = { getProducts, getTopProducts, getProductId, deleteProduct, updateProduct, createProduct }
+module.exports = { getProducts, getTopProducts, countProducts, getProductId, deleteProduct, updateProduct, createProduct }
