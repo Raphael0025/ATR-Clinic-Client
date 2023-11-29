@@ -49,6 +49,24 @@ const ProductPage = () => {
         fetchCount()
     }, [])
 
+    const handleDelete = async (itemToDelete) => {
+        try {
+          // Make an API call to delete the item in the database
+            const response = await fetch(`https://clinic-api-two.vercel.app/api/products/${itemToDelete._id}`, {
+                method: 'DELETE',
+            });
+    
+        if (!response.ok) {
+            throw new Error('Failed to delete item');
+        }
+    
+            // Remove the item from the local state
+            setProducts((prevInventory) => prevInventory.filter((item) => item !== itemToDelete))
+        } catch (error) {
+            console.error('Error deleting item:', error);
+        }
+    }
+    
     return (
         <main id='product' className=' container-fluid '> 
             <section className='opaque-background rounded-2 container px-3 py-4 d-flex flex-column gap-4'> 
@@ -95,7 +113,7 @@ const ProductPage = () => {
                                             <IconPark path={'akar-icons:edit'} size={23} />
                                         </button>
                                         <button className='btn btn-sm text-dark-subtle' 
-                                        //onClick={() => onDelete(data)}
+                                        onClick={() => handleDelete(product)}
                                         >  
                                             <IconPark path={'mdi:trash-can-outline'} size={23} />
                                         </button>
