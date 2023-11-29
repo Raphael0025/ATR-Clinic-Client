@@ -48,7 +48,7 @@ const NewsFeedPage = () => {
                 {news && news.map((post) => (
                     <article key={post._id} className='p-4 rounded-3 w-50' style={{backgroundColor: 'var(--white)'}}>
                         <div className='text-center bg-success rounded-3'>
-                            <img src={post.post_img} className=' py-4' width={'50%'} alt='content_photo'/>
+                            <img src={post.post_img} className=' py-4 px-2' width={'50%'} height={'50%'} alt='content_photo'/>
                         </div>
                         <div className='my-4 border-top border-bottom border-2 border-success'>
                             <h3 className='text-start py-4'><strong>{post.title}</strong></h3>
@@ -56,11 +56,11 @@ const NewsFeedPage = () => {
                             <p className='mt-3 py-4 pt-0 px-3 text-wrap'>{post.description}</p>
                         </div>
                         <div className='d-flex justify-content-end container'>
-                        <FacebookShareButton url={`https://atr-clinic-client.vercel.app/newsfeed`} quote={'Check what`s Latest'} hashtag={'#ATRSkinCareClinic'}>
-                            <button className='border-light px-4 btn btn-success'>
-                                <BiShare className='flip' /> Share on Facebook
-                            </button>
-                        </FacebookShareButton>
+                            <FacebookShareButton url={`https://atr-clinic-client.vercel.app/newsfeed`} quote={'Check what`s Latest'} hashtag={'#ATRSkinCareClinic'}>
+                                <button className='border-light px-4 btn btn-success'>
+                                    <BiShare className='flip' /> Share on Facebook
+                                </button>
+                            </FacebookShareButton>
                         </div>
                     </article>
                 ))}

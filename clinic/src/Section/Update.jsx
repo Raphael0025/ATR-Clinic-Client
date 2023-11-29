@@ -50,12 +50,12 @@ const Update = () => {
       ) : (
         <>
           {news && news.map((update) => (
-            <div key={update._id} className='p-3 gap-5 d-flex rounded-4 transparent-container bg-light'>
-              <div className='rounded-3 p-4 bg-success d-flex justify-content-center align-items-center '>
-                <img src={update.post_img || filler} alt='blog' />
+            <div key={update._id} className='p-3 gap-5 d-flex rounded-4 transparent-container bg-light' style={{height: '500px'}}>
+              <div className='rounded-3 p-4 bg-success d-flex justify-content-center align-items-center w-50'>
+                <img src={update.post_img || filler} alt='blog' height={'100%'} />
               </div>
-              <div className='py-3 pe-3'>
-                <div className='border-top border-bottom border-success border-3 py-2'>
+              <div className='py-3 pe-3 h-100'>
+                <div className='border-top border-bottom border-success border-3 py-2' style={{height: '85%'}}>
                   <h2 className='mb-3 fw-bold'>{update.title}</h2>
                   <p style={{fontSize: '12px'}}><BsClockFill className='text-success'/> {update.createdAt && format(new Date(update.createdAt), 'E, MMMM do yyyy, h:mm:ss a')}</p>
                   <p className='trunc'>{update.description}</p>

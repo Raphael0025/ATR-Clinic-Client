@@ -80,10 +80,10 @@ const AddToCart = () => {
                         <button type="button" onClick={() => setItem({...item, qty: 1, shipping: 'For Delivery'})} className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div className="modal-body">
-                        <form onSubmit={handleSubmit} className='d-flex flex-column gap-2 text-success'>
+                        <form onSubmit={handleSubmit} className='d-flex flex-column gap-2 w-100 text-success'>
                             <div className='d-flex gap-2'>
-                                <div>
-                                {itemData.product_img && <img alt='product' src={itemData.product_img} width={'100%'} />}
+                                <div className='h-25'>
+                                {itemData.product_img && <img alt='product' src={itemData.product_img} width={'250px'} height={'250px'} />}
                                 </div>
                                 <div className='d-flex flex-column gap-3'>
                                     <h4 className='fw-bold'>{itemData.item_name}</h4>
@@ -96,7 +96,7 @@ const AddToCart = () => {
                                         </div>
                                         {itemData.qty === 0 ? (<pre className='text-danger fst-italic m-0'>*Out of Stock</pre>) : ''}
                                     </div>
-                                    <div className='d-flex gap-2'>
+                                    <div className='d-flex gap-2 w-100'>
                                         <button type='button' onClick={() => setItem({...item, shipping: 'For Pick-up'})} className={`w-100 btn ${item.shipping === 'For Pick-up' ? 'btn-success' : 'btn-outline-success'} btn-sm`}>For Pick-up</button>
                                         <button type='button' onClick={() => setItem({...item, shipping: 'For Delivery'})} className={`w-100 btn ${item.shipping === 'For Delivery' ? 'btn-success' : 'btn-outline-success'} btn-sm`}>For Delivery</button>
                                     </div>
