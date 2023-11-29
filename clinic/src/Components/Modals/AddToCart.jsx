@@ -11,7 +11,8 @@ const AddToCart = () => {
         qty: 1,
         unit_price: 1,
         total_amount: 0,
-        shipping: 'For Delivery'
+        shipping: '',
+        courier: ''
     })
 
     useEffect(() => {
@@ -56,7 +57,8 @@ const AddToCart = () => {
                 qty: 1,
                 unit_price: 1,
                 total_amount: 0,
-                shipping: 'For Delivery'
+                shipping: '',
+                courier: ''
             })
         }
         if(response.ok){
@@ -66,7 +68,8 @@ const AddToCart = () => {
                 qty: 1,
                 unit_price: 1,
                 total_amount: 0,
-                shipping: 'For Delivery'
+                shipping: '',
+                courier: ''
             })
         }
     }
@@ -104,16 +107,17 @@ const AddToCart = () => {
                                     ? <>
                                         <div className='d-flex flex-column gap-2 w-100'>
                                             <h6>Select Delivery Option:</h6>
-                                            <button type='button' className={`w-100 btn ${item.shipping === 'For Pick-up' ? 'btn-success' : 'btn-outline-success'} btn-sm`}>Toktok</button>
-                                            <button type='button' className={`w-100 btn ${item.shipping === 'For Delivery' ? 'btn-success' : 'btn-outline-success'} btn-sm`}>Lalamove</button>
-                                            <button type='button' className={`w-100 btn ${item.shipping === 'For Pick-up' ? 'btn-success' : 'btn-outline-success'} btn-sm`}>Angkas</button>
-                                            <button type='button' className={`w-100 btn ${item.shipping === 'For Delivery' ? 'btn-success' : 'btn-outline-success'} btn-sm`}>Grab</button>
+                                            <button type='button' onClick={() => setItem({...item, courier: 'Toktok'})} className={`w-100 btn ${item.courier === 'Toktok' ? 'btn-success' : 'btn-outline-success'} btn-sm`}>Toktok</button>
+                                            <button type='button' onClick={() => setItem({...item, courier: 'Lalamove'})} className={`w-100 btn ${item.courier === 'Lalamove' ? 'btn-success' : 'btn-outline-success'} btn-sm`}>Lalamove</button>
+                                            <button type='button' onClick={() => setItem({...item, courier: 'Angkas'})} className={`w-100 btn ${item.courier === 'Angkas' ? 'btn-success' : 'btn-outline-success'} btn-sm`}>Angkas</button>
+                                            <button type='button' onClick={() => setItem({...item, courier: 'Grab'})} className={`w-100 btn ${item.courier === 'Grab' ? 'btn-success' : 'btn-outline-success'} btn-sm`}>Grab</button>
                                         </div>
                                     </>
-                                    :
-                                    <>
-                                        <p className='text-danger fst-italic' style={{fontSize: '12px'}}>*Orders labeled 'For Pick-Up' must be claimed within 2 days to avoid cancellation.</p>
-                                    </>
+                                    : item.shipping === 'For Pick-up' 
+                                        ?   <>
+                                                <p className='text-danger fst-italic' style={{fontSize: '12px'}}>*Orders labeled 'For Pick-Up' must be claimed within 2 days to avoid cancellation.</p>
+                                            </>
+                                        : <></>
                                     }
                                 </div>
                             </div>

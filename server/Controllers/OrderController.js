@@ -9,9 +9,9 @@ const getOrders = async (req, res) => {
 
 // Create 
 const createOrder = async (req, res) => {
-    const { total_qty, total_amount, shipping, item_list, user_name, user_id, address, phone } = req.body
+    const { total_qty, total_amount, shipping, courier, item_list, user_name, user_id, address, phone } = req.body
     try{
-        const order = await Order.create({ total_qty, total_amount, shipping, item_list, user_name, user_id, address, phone })
+        const order = await Order.create({ total_qty, total_amount, shipping, courier, item_list, user_name, user_id, address, phone })
         res.status(200).json(order)
     }catch(error){
         res.status(400).json({error: error.message})

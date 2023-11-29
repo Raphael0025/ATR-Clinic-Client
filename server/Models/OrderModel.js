@@ -38,8 +38,12 @@ const OrderSchema = new Schema({
     },
     shipping: {
         type: String,
-        default: 'For Delivery'
+        default: 'For Pickup'
     }, 
+    courier: {
+        type: String,
+        default: 'For Pickup'
+    },
     item_list : [ItemsSchema]
 }, { timestamps: true })
 

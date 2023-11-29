@@ -23,7 +23,11 @@ const CartSchema = new Schema({
     },
     shipping: {
         type: String,
-        default: 'For Delivery'
+        default: 'For Pickup'
+    }, 
+    courier: {
+        type: String,
+        default: 'For Pickup'
     },
     total_amount: {
         type: Number,
