@@ -38,11 +38,7 @@ const ProductPage = () => {
                     </div>
                     <div className='d-flex gap-4 border-bottom border-warning border-5 py-4 mb-4'>
                         <div className='py-4 col-3 px-5 text-light rounded-3 d-flex flex-column ' style={{backgroundColor: '#FFFFFF80'}}>
-                            <h6>New Orders</h6>
-                            <span className='w-100 text-end fs-3 fw-bold'>150</span>
-                        </div>
-                        <div className='py-4 col-3 px-5 text-light rounded-3 d-flex flex-column ' style={{backgroundColor: '#FFFFFF80'}}>
-                            <h6>Pending Orders</h6>
+                            <h6>Total Products</h6>
                             <span className='w-100 text-end fs-3 fw-bold'>150</span>
                         </div>
                     </div>
@@ -52,6 +48,7 @@ const ProductPage = () => {
                             <span className='w-100'>{'Stock'}</span>
                             <span className='w-100'>{'Unit Price'}</span>
                             <span className='w-100'>{'Sales'}</span>
+                            <span className='w-100'>{'Action'}</span>
                         </div>
                         <div className='py-3 px-2 d-flex gap-3 flex-column overflow-y-scroll ' style={{height: '460px'}}>
                         {loading ? (
@@ -70,6 +67,7 @@ const ProductPage = () => {
                                     </span>
                                     <span className='w-100'>{product.qty} pcs</span>
                                     <span className='w-100'>Php {product.unit_price}</span>
+                                    <span className='w-100'>Php {product.soldCount * product.unit_price}</span>
                                     <span className='w-100'>Php {product.soldCount * product.unit_price}</span>
                                 </div>
                             ))}

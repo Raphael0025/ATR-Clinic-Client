@@ -12,6 +12,7 @@ const ConfirmOrder = () => {
         phone: '09269607368',
         address: '558 M De Jesus Street Pasay City',
         shipping: 'For Delivery',
+        courier: '',
         total_amount: 0,
         total_qty: 0,
         item_list: [],
@@ -49,6 +50,7 @@ const ConfirmOrder = () => {
                 phone: '09269607368',
                 address: '558 M De Jesus Street Pasay City',
                 shipping: 'For Delivery',
+                courier: '',
                 total_amount: 0,
                 total_qty: 0,
                 item_list: [],
@@ -61,6 +63,7 @@ const ConfirmOrder = () => {
                 phone: '09269607368',
                 address: '558 M De Jesus Street Pasay City',
                 shipping: 'For Delivery',
+                courier: '',
                 total_amount: 0,
                 total_qty: 0,
                 item_list: [],
@@ -171,7 +174,6 @@ const ConfirmOrder = () => {
                 </div>
             </section>
             <form onSubmit={handleSubmit} className='position-fixed bottom-0 text-success container-fluid bg-success-subtle d-flex justify-content-end gap-4 fw-bold px-5 p-3' >
-                <span className='rounded-3 p-3 border'>Shipping Option: {itemStates.shipping}</span>
                 <span className='rounded-3 p-3 border'>Total Quantity: {itemStates.total_qty}</span>
                 <span className='rounded-3 p-3 border'>Total Amount: Php {itemStates.total_amount}.00</span>
                 <button type='submit' className='btn btn-lg btn-success' >Order</button>

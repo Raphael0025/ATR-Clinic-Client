@@ -73,6 +73,7 @@
 }
 .item-card{
     background-color: #00ff3759;
+    width: 500px;
 }
 .button-itm{
     color: var(--primary-color);
