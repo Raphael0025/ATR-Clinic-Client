@@ -8,6 +8,16 @@ const getUsers = async (req, res) => {
     res.status(200).json(users)
 }
 
+// API function to count total documents in the User collection
+const countUsers = async (req, res) => {
+    try {
+        const totalUsers = await Order.countDocuments({});
+        res.status(200).json({ totalUsers });
+    } catch (error) {
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+}
+
 // get single user
 const getUserById = async (req, res) => {
     const { id } = req.params
@@ -67,6 +77,7 @@ const updateUser = async (req, res) => {
 module.exports = {
     getUsers,
     getUserById,
+    countUsers,
     createUser,
     deleteUser,
     updateUser

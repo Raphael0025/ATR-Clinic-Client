@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { IconPark } from 'assets/SvgIcons'
 import vector from 'assets/extra/camera.png'
-import { useItems } from 'Context/ItemsContext';
 
 const ViewItem = ({ selectedItem }) => {
 
@@ -19,9 +18,11 @@ const ViewItem = ({ selectedItem }) => {
                 qty: selectedItem.qty || 0,
                 unit_price: selectedItem.unit_price || 0,
                 product_img: selectedItem.product_img || '',
+                _id: selectedItem._id || null, // Make sure _id is set correctly
             });
         }
     }, [selectedItem]);
+    
 
     const handleChange = (e) => {
         const { id, value } = e.target;
@@ -32,44 +33,35 @@ const ViewItem = ({ selectedItem }) => {
     }
 
     const handleUpdate = async () => {
+        if (!formData._id) {
+            console.error('Item ID is missing');
+            return;
+        }
+    
         try {
             const response = await fetch(`https://clinic-api-two.vercel.app/api/products/${formData._id}`, {
-                method: 'PATCH', // or 'PUT' depending on your API
+                method: 'PATCH',
                 body: JSON.stringify(formData),
                 headers: {
                     'Content-Type': 'application/json',
-                }
-            })
+                },
+            });
     
-            const json = await response.json()
+            const json = await response.json();
     
-            console.log(json)
             if (!response.ok) {
                 alert('Product Not Updated')
-                console.log(json)
-                setFormData({
-                    item_name: '',
-                    qty: 0,
-                    unit_price: 0,
-                    product_img: ''
-                })
-            } 
-            if(response.ok){
+                console.error(json)
+            } else {
                 alert('Product Updated')
                 console.log(json)
-                setFormData({
-                    item_name: '',
-                    qty: 0,
-                    unit_price: 0,
-                    product_img: ''
-                })
+                window.location.reload()
                 // Optionally, you can reset the form or perform other actions after a successful update
             }
         } catch (error) {
             console.error('Error updating item:', error);
         }
-    };
-    
+    }    
 
     const convertToBase64 = (file) => {
         return new Promise((resolve, reject) => {
