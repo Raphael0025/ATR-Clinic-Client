@@ -5,6 +5,7 @@ import 'react-loading-skeleton/dist/skeleton.css'
 
 const Dashboard = () => {
     const [products, setProducts] = useState(null)
+    const [total, setTotal] = useState(null)
     const [loading, setLoading] = useState(true)
 
     // Fetching Data from Database
@@ -12,10 +13,14 @@ const Dashboard = () => {
         const fetchProducts = async () => {
         try {
             const response = await fetch('https://clinic-api-two.vercel.app/api/products/top-products');
+            const ttl_amt = await fetch('https://clinic-api-two.vercel.app/api/ordering/get-total');
+            
             const json = await response.json();
+            const total = await ttl_amt.json()
 
             if (response.ok) {
-            setProducts(json);
+                setProducts(json)
+                setTotal(total)
             }
         } catch (error) {
             console.error('Error fetching data:', error);
@@ -33,7 +38,7 @@ const Dashboard = () => {
                 <h6 className='m-0 fw-bold text-warning '>Dashboard</h6>
                 <div className=' rounded-3 text-light p-3 px-5 d-flex flex-column gap-3' style={{ backgroundColor: '#FFFFFF80'}}>
                     Total Revenue
-                    <span className='fw-bold fs-4'>Php 80,000</span>
+                    <span className='fw-bold fs-4'>Php {total || 0}.00</span>
                 </div>
                 <section className='d-flex justify-content-center align-items-center gap-5 '>
                     <div className='rounded-2 text-light p-4 gap-3 d-flex' style={{ backgroundColor: '#FFFFFF80'}}>

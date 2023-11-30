@@ -34,7 +34,7 @@ const History = () => {
             <section className='opaque-background rounded-2 container px-3 py-4 d-flex flex-column gap-4 h-100'> 
                 <h6 className='m-0 fw-bold text-warning '>Order History</h6>
                 <div className='d-flex flex-column'>
-                    <h4 className='text-light'>Order Management</h4>
+                    <h4 className='text-light'>Order History Management</h4>
                     <div id='accordionParent' className='rounded-3 p-3 text-center accordion' style={{backgroundColor: '#B2B2B280', fontSize: '12px'}}>
                         <div className='d-flex gap-3 rounded-3 p-3 px-4 pb-0'>
                             <div className='w-75 d-flex gap-2'>
@@ -61,59 +61,63 @@ const History = () => {
                             </div>
                         ) : (
                             <>
-                            {orders && orders.map((order) => (
-                                <div className='accordion-item rounded-3' key={order._id} style={{backgroundColor: '#D9D9D980'}}>
-                                    <div className='accordion-header d-flex align-items-center'>
-                                        <button style={{fontSize: '12px'}} className='btn d-flex gap-2 w-75 align-items-center ' type='button' data-bs-toggle='collapse' data-bs-target={`#collapse${order._id}`} aria-expanded="true" aria-controls={`collapse${order._id}`}>
-                                            <span className='w-100 text-truncate'>{order._id}</span>
-                                            <span className='w-100 text-truncate'>{order.createdAt && format(new Date(order.createdAt), 'MMM dd, yyyy')}</span>
-                                            <span className='w-100 text-truncate'>Php {order.total_amount}.00</span>
-                                            <span className='w-100 text-truncate'>{order.total_qty} pcs.</span>
-                                            <span className='w-100 text-truncate'>{order.shipping}</span>
-                                        </button>  
-                                        <div className='w-25 d-flex align-items-center'>
-                                            <span className='w-100 text-truncate'>
-                                                {order.status}    
-                                            </span>
-                                            <span className='w-100 text-truncate'>
-                                                <button className='btn'><IconPark path={'ic:outline-delete'} size={20}/></button>    
-                                            </span>
-                                        </div>              
-                                    </div>
-                                    <div id={`collapse${order._id}`} className='accordion-collapse collapse' data-bs-parent='#accordionParent'>
-                                        <div className='accordion-body bg-light d-flex justify-content-start '>
-                                            <div className='w-50 d-flex align-items-start flex-column'>
-                                                <h6>Items</h6>
-                                                <div className='d-flex flex-column w-100 align-items-start gap-2'>
-                                                    <div className='d-flex align-items-center gap-2 text-center w-100' style={{color: '#ffffff60'}}>
-                                                        {subHeaders.map((header, indx) => (
-                                                            <span className='w-100 text-truncate text-dark' key={indx}>{header}</span>
+                            {orders && orders.length !== 0 ? ( 
+                                orders && orders.map((order) => (
+                                    <div className='accordion-item rounded-3' key={order._id} style={{backgroundColor: '#D9D9D980'}}>
+                                        <div className='accordion-header d-flex align-items-center'>
+                                            <button style={{fontSize: '12px'}} className='btn d-flex gap-2 w-75 align-items-center ' type='button' data-bs-toggle='collapse' data-bs-target={`#collapse${order._id}`} aria-expanded="true" aria-controls={`collapse${order._id}`}>
+                                                <span className='w-100 text-truncate'>{order._id}</span>
+                                                <span className='w-100 text-truncate'>{order.createdAt && format(new Date(order.createdAt), 'MMM dd, yyyy')}</span>
+                                                <span className='w-100 text-truncate'>Php {order.total_amount}.00</span>
+                                                <span className='w-100 text-truncate'>{order.total_qty} pcs.</span>
+                                                <span className='w-100 text-truncate'>{order.shipping}</span>
+                                            </button>  
+                                            <div className='w-25 d-flex align-items-center'>
+                                                <span className='w-100 text-truncate'>
+                                                    {order.status}    
+                                                </span>
+                                                <span className='w-100 text-truncate'>
+                                                    <button className='btn'><IconPark path={'ic:outline-delete'} size={20}/></button>    
+                                                </span>
+                                            </div>              
+                                        </div>
+                                        <div id={`collapse${order._id}`} className='accordion-collapse collapse' data-bs-parent='#accordionParent'>
+                                            <div className='accordion-body bg-light d-flex justify-content-start '>
+                                                <div className='w-50 d-flex align-items-start flex-column'>
+                                                    <h6>Items</h6>
+                                                    <div className='d-flex flex-column w-100 align-items-start gap-2'>
+                                                        <div className='d-flex align-items-center gap-2 text-center w-100' style={{color: '#ffffff60'}}>
+                                                            {subHeaders.map((header, indx) => (
+                                                                <span className='w-100 text-truncate text-dark' key={indx}>{header}</span>
+                                                            ))}
+                                                        </div>
+                                                        {Array.isArray(order.item_list) &&
+                                                        order.item_list.map((item, i) => (
+                                                            <div className='d-flex align-items-center gap-2 text-center w-100 py-1' key={i}>
+                                                                <span className='w-100 text-truncate'>{item.item_id}</span>
+                                                                <span className='w-100 text-truncate'>{item.item_name}</span>
+                                                                <span className='w-100 text-truncate'>{item.qty}</span>
+                                                                <span className='w-100 text-truncate'>{item.unit_price}</span>
+                                                                <span className='w-100 text-truncate'>{item.unit_price * item.qty}</span>
+                                                            </div>
                                                         ))}
                                                     </div>
-                                                    {Array.isArray(order.item_list) &&
-                                                    order.item_list.map((item, i) => (
-                                                        <div className='d-flex align-items-center gap-2 text-center w-100 py-1' key={i}>
-                                                            <span className='w-100 text-truncate'>{item.item_id}</span>
-                                                            <span className='w-100 text-truncate'>{item.item_name}</span>
-                                                            <span className='w-100 text-truncate'>{item.qty}</span>
-                                                            <span className='w-100 text-truncate'>{item.unit_price}</span>
-                                                            <span className='w-100 text-truncate'>{item.unit_price * item.qty}</span>
-                                                        </div>
-                                                    ))}
                                                 </div>
-                                            </div>
-                                            <div className='d-flex flex-column align-items-start w-50'>
-                                                <h6>Customer Details</h6>
-                                                <div className='d-flex flex-column align-items-start gap-2'>
-                                                    <span className='fw-bold'>Customer Name: <span className='fw-normal'>{order.user_name}</span></span>
-                                                    <span className='fw-bold'>Phone: <span className='fw-normal'>{order.phone}</span></span>
-                                                    <span className='fw-bold'>Address: <span className='fw-normal'>{order.address}</span></span>
+                                                <div className='d-flex flex-column align-items-start w-50'>
+                                                    <h6>Customer Details</h6>
+                                                    <div className='d-flex flex-column align-items-start gap-2'>
+                                                        <span className='fw-bold'>Customer Name: <span className='fw-normal'>{order.user_name}</span></span>
+                                                        <span className='fw-bold'>Phone: <span className='fw-normal'>{order.phone}</span></span>
+                                                        <span className='fw-bold'>Address: <span className='fw-normal'>{order.address}</span></span>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            ))}
+                                ))
+                            ) : (
+                                    <p>No orders available</p>
+                                )}
                             </>
                         )}
                         </div>

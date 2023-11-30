@@ -128,4 +128,28 @@ const transferDailyOrders = async () => {
 // Schedule the daily transfer at midnight
 schedule.scheduleJob('0 0 * * *', transferDailyOrders);
 
-module.exports = { getOrders, countOrders, newOrders, transferDailyOrders, countCompleted, countInProgress, countPending, deleteOrder, updateOrder, createOrder }
+
+const totalAmount = async (req, res) => {
+    try {
+        // Calculate total amount using MongoDB aggregation
+        const result = await Order.aggregate([
+            {
+                $group: {
+                    _id: null,
+                    totalAmount: { $sum: '$total_amount' }
+                }
+            }
+        ]);
+
+        if (result.length > 0) {
+            res.status(200).json({ totalAmount: result[0].totalAmount });
+        } else {
+            res.status(404).json({ error: 'No orders found' });
+        }
+    } catch (error) {
+        console.error('Error calculating total amount:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+}
+
+module.exports = { getOrders, totalAmount, countOrders, newOrders, transferDailyOrders, countCompleted, countInProgress, countPending, deleteOrder, updateOrder, createOrder }
