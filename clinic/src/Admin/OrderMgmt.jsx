@@ -2,20 +2,31 @@ import React, { useState, useEffect } from 'react'
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import { format } from 'date-fns';
+import { IconPark } from 'assets/SvgIcons'
 
 const OrderMgmt = () => {
     const [orders, setOrders] = useState(null)
+    const [totalOrders, setTotalOrders] = useState(null)
+    const [newOrders, setNewOrders] = useState(null)
+    const [pendingOrders, setPendingOrders] = useState(null)
     const [loading, setLoading] = useState(true)
 
     // Fetching Data from Database
     useEffect(() => {
         const fetchProducts = async () => {
         try {
-            const response = await fetch('https://clinic-api-two.vercel.app/api/ordering');
-            const json = await response.json();
+            const response = await fetch('https://clinic-api-two.vercel.app/api/ordering')
+            const count = await fetch('https://clinic-api-two.vercel.app/api/ordering/count')
+            const pending = await fetch('https://clinic-api-two.vercel.app/api/ordering/count-pending')
+
+            const jsonCount = await count.json()
+            const json = await response.json()
+            const pendingRes = await pending.json()
 
             if (response.ok) {
                 setOrders(json)
+                setTotalOrders(jsonCount.totalOrders)
+                setPendingOrders(pendingRes.totalPendingOrders)
             }
         } catch (error) {
             console.error('Error fetching data:', error);
@@ -27,6 +38,34 @@ const OrderMgmt = () => {
         fetchProducts()
     }, [])
 
+    const setStatus = async (orderId, newStatus) => {
+        try {
+          // Send a PATCH request to update the order status
+        const response = await fetch(`https://clinic-api-two.vercel.app/api/ordering/${orderId}`, {
+            method: 'PATCH',
+            headers: {
+            'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ status: newStatus }),
+        });
+    
+        if (!response.ok) {
+            throw new Error('Failed to update order status');
+        }
+    
+          // If the request is successful, you can update the local state to reflect the changes immediately
+        setOrders((prevOrders) =>
+            prevOrders.map((order) =>
+                order._id === orderId ? { ...order, status: newStatus } : order
+            )
+        );
+    
+            console.log('Order status updated successfully');
+        } catch (error) {
+            console.error('Error updating order status:', error.message);
+        }
+    };
+    
     return (
         <main id='order' className=' container-fluid  '> 
             <section className='opaque-background rounded-2 container px-3 py-4 d-flex flex-column gap-4'> 
@@ -36,7 +75,7 @@ const OrderMgmt = () => {
                     <div className='d-flex gap-4 border-bottom border-warning border-5 py-4 mb-4'>
                         <div className='py-4 col-3 px-5 text-light rounded-3 d-flex flex-column ' style={{backgroundColor: '#FFFFFF80'}}>
                             <h6>New Orders</h6>
-                            <span className='w-100 text-end fs-3 fw-bold'>150</span>
+                            <span className='w-100 text-end fs-3 fw-bold'>{totalOrders}</span>
                         </div>
                         <div className='py-4 col-3 px-5 text-light rounded-3 d-flex flex-column ' style={{backgroundColor: '#FFFFFF80'}}>
                             <h6>Pending Orders</h6>
@@ -44,7 +83,7 @@ const OrderMgmt = () => {
                         </div>
                         <div className='py-4 col-3 px-5 text-light rounded-3 d-flex flex-column ' style={{backgroundColor: '#FFFFFF80'}}>
                             <h6>Picked-Up Orders</h6>
-                            <span className='w-100 text-end fs-3 fw-bold'>150</span>
+                            <span className='w-100 text-end fs-3 fw-bold'>{pendingOrders}</span>
                         </div>
                     </div>
                     <div className='rounded-3 p-3 text-center' style={{backgroundColor: '#B2B2B280', fontSize: '12px'}}>
@@ -77,18 +116,14 @@ const OrderMgmt = () => {
                                     <span className='w-100 text-truncate'>{order.total_qty} pcs.</span>
                                     <span className='w-100 text-truncate'>{order.shipping}</span>
                                     
-                                    <div className="dropdown d-flex justify-content-center align-items-center ">
-                                        <button className="btn w-100 btn-sm dropdown-toggle text-light" type="button" data-bs-toggle="dropdown" aria-expanded="false" style={{fontSize: '12px', backgroundColor: '#2E30ff'}}>
-                                            {order.shipping} 
+                                    <div className="dropdown d-flex justify-content-center align-items-center w-100">
+                                        <button className={`btn w-100 btn-sm dropdown-toggle text-light ${order.status === 'Received' ? 'bg-success' : order.status === 'Processing' ? 'bg-warning' : order.status === 'Pending' ? 'bg-secondary' : order.status === 'Canceled' ? 'bg-danger' : ''}`} type="button" data-bs-toggle="dropdown" aria-expanded="false" style={{fontSize: '12px'}}>
+                                            {order.status} 
                                         </button>
                                         <ul className="dropdown-menu" >
                                             {['Received', 'Processing', 'Pending', 'Canceled'].map((status, index) => (
                                                 <li key={index}>
-                                                    <p
-                                                        className='dropdown-item'
-                                                        onClick={() => setStatus(order._id, status)}
-                                                        style={{ cursor: 'pointer' }}
-                                                    >
+                                                    <p className='dropdown-item' onClick={() => setStatus(order._id, status)} style={{ cursor: 'pointer' }} >
                                                         {status}
                                                     </p>
                                                 </li>
@@ -97,7 +132,7 @@ const OrderMgmt = () => {
                                     </div>
                                     
                                     <span className='w-100 text-truncate'>
-                                        <button>Delete</button>    
+                                        <button className='btn'><IconPark path={'ic:outline-delete'} size={20}/></button>    
                                     </span>
                                 </div>
                             ))}
