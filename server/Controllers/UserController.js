@@ -103,7 +103,7 @@ const updateUser = async (req, res) => {
 
 //login user
 
-const signUp = async (req, res) => {
+const signupUser = async (req, res) => {
     const { email, password } = req.body
     try{
         const user = await User.signup(email, password)
@@ -115,6 +115,7 @@ const signUp = async (req, res) => {
 
 module.exports = {
     getUsers,
+    signupUser,
     getUserById,
     countUsers,
     countNewUsersInCurrentMonth,
