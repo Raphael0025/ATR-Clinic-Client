@@ -1,26 +1,16 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
+import { IconPark } from 'assets/SvgIcons'
 
 const History = () => {
+    const [loading, setLoading] = useState(true)
+
     return (
-        <main id='order' className=' container-fluid  '> 
-            <section className='opaque-background rounded-2 container px-3 py-4 d-flex flex-column gap-4'> 
+        <main id='order' className=' container-fluid pb-3 vh-100'> 
+            <section className='opaque-background rounded-2 container px-3 py-4 d-flex flex-column gap-4 h-100'> 
                 <h6 className='m-0 fw-bold text-warning '>Order History</h6>
-                {/* <div className='d-flex flex-column'>
-                    <h4 className='text-light'>Order Management</h4>
-                    <div className='d-flex gap-4 border-bottom border-warning border-5 py-4 mb-4'>
-                        <div className='py-4 col-3 px-5 text-light rounded-3 d-flex flex-column ' style={{backgroundColor: '#FFFFFF80'}}>
-                            <h6>New Orders</h6>
-                            <span className='w-100 text-end fs-3 fw-bold'>150</span>
-                        </div>
-                        <div className='py-4 col-3 px-5 text-light rounded-3 d-flex flex-column ' style={{backgroundColor: '#FFFFFF80'}}>
-                            <h6>Pending Orders</h6>
-                            <span className='w-100 text-end fs-3 fw-bold'>150</span>
-                        </div>
-                        <div className='py-4 col-3 px-5 text-light rounded-3 d-flex flex-column ' style={{backgroundColor: '#FFFFFF80'}}>
-                            <h6>Picked-Up Orders</h6>
-                            <span className='w-100 text-end fs-3 fw-bold'>150</span>
-                        </div>
-                    </div>
+                <div className='d-flex flex-column h-100'>
                     <div className='rounded-3 p-3' style={{backgroundColor: '#B2B2B280', fontSize: '12px'}}>
                         <div className='d-flex gap-3 rounded-3 p-3 pb-0'>
                             <span className='w-100'>{'Order ID'}</span>
@@ -38,7 +28,7 @@ const History = () => {
                             </div>
                         ) : (
                             <>
-                            {users && users.map((user) => (
+                            {/* {users && users.map((user) => (
                                 <div className='d-flex gap-3 px-3 py-2 rounded-3' key={user._id} style={{backgroundColor: '#D9D9D980'}}>
                                     <span className='w-100'>{user.first_name} {user.last_name}</span>
                                     <span className='w-100'>{user.user_name}</span>
@@ -46,12 +36,12 @@ const History = () => {
                                     <span className='w-100'>{user.address}</span>
                                     <span className='w-100'>{user.phone}</span>
                                 </div>
-                            ))}
+                            ))} */}
                             </>
                         )}
                         </div>
                     </div>
-                </div> */}
+                </div>
             </section>
         </main>
     )

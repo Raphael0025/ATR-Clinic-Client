@@ -3,7 +3,6 @@ import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import { CreateProductModal, ViewItem } from 'Components' 
 import { IconPark } from 'assets/SvgIcons'
-import { useItems } from 'Context/ItemsContext'
 
 const ProductPage = () => {
     const [products, setProducts] = useState(null)

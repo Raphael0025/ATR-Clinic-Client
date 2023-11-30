@@ -1,22 +1,19 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
+import { IconPark } from 'assets/SvgIcons'
 
 const PreOrder = () => {
+    const [loading, setLoading] = useState(true)
+
     return (
-        <main id='order' className=' container-fluid  '> 
-            <section className='opaque-background rounded-2 container px-3 py-4 mb-2 d-flex flex-column gap-4'> 
+        <main id='order' className=' container-fluid pb-3 '> 
+            <section className='opaque-background rounded-2 container px-3 py-4 d-flex flex-column gap-4'> 
                 <h6 className='m-0 fw-bold text-warning '>Pre-Order List</h6>
-                {/* <div className='d-flex flex-column'>
+                <div className='d-flex flex-column'>
                     <div className='d-flex gap-4 border-bottom border-warning border-5 py-4 mb-4'>
                         <div className='py-4 col-3 px-5 text-light rounded-3 d-flex flex-column ' style={{backgroundColor: '#FFFFFF80'}}>
-                            <h6>New Orders</h6>
-                            <span className='w-100 text-end fs-3 fw-bold'>150</span>
-                        </div>
-                        <div className='py-4 col-3 px-5 text-light rounded-3 d-flex flex-column ' style={{backgroundColor: '#FFFFFF80'}}>
-                            <h6>Pending Orders</h6>
-                            <span className='w-100 text-end fs-3 fw-bold'>150</span>
-                        </div>
-                        <div className='py-4 col-3 px-5 text-light rounded-3 d-flex flex-column ' style={{backgroundColor: '#FFFFFF80'}}>
-                            <h6>Picked-Up Orders</h6>
+                            <h6>Pre Orders</h6>
                             <span className='w-100 text-end fs-3 fw-bold'>150</span>
                         </div>
                     </div>
@@ -37,7 +34,7 @@ const PreOrder = () => {
                             </div>
                         ) : (
                             <>
-                            {users && users.map((user) => (
+                            {/* {users && users.map((user) => (
                                 <div className='d-flex gap-3 px-3 py-2 rounded-3' key={user._id} style={{backgroundColor: '#D9D9D980'}}>
                                     <span className='w-100'>{user.first_name} {user.last_name}</span>
                                     <span className='w-100'>{user.user_name}</span>
@@ -45,12 +42,12 @@ const PreOrder = () => {
                                     <span className='w-100'>{user.address}</span>
                                     <span className='w-100'>{user.phone}</span>
                                 </div>
-                            ))}
+                            ))} */}
                             </>
                         )}
                         </div>
                     </div>
-                </div> */}
+                </div>
             </section>
         </main>
     )
