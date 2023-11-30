@@ -12,31 +12,14 @@ const CustomerMgmt = () => {
     useEffect(() => {
         const fetchCount = async () => {
         try {
-            const response = await fetch('https://clinic-api-two.vercel.app/api/users/new-count');
-            const json = await response.json()
-
-            if (response.ok) {
-                setNewUsers(json.totalNewUsers)
-            }
-        } catch (error) {
-            console.error('Error fetching data:', error);
-        } finally {
-            // Set loading to false once data is fetched
-            setLoading(false);
-        }
-        };
-        fetchCount()
-    }, [])
-
-    // Fetching Data from Database
-    useEffect(() => {
-        const fetchCount = async () => {
-        try {
             const response = await fetch('https://clinic-api-two.vercel.app/api/users/count');
+            const response2 = await fetch('https://clinic-api-two.vercel.app/api/users/new-count');
             const json = await response.json()
+            const json2 = await response2.json()
 
-            if (response.ok) {
+            if (response.ok && response2.ok) {
                 setCount(json.totalUsers)
+                setNewUsers(json2.totalNewUsers)
             }
         } catch (error) {
             console.error('Error fetching data:', error);
@@ -84,7 +67,7 @@ const CustomerMgmt = () => {
                             <span className='w-100 text-end fs-3 fw-bold'>{newUsers}</span>
                         </div>
                     </div>
-                    <div className='py-3 px-2 d-flex gap-3 flex-column rounded-3 overflow-y-scroll ' style={{backgroundColor: '#B2B2B280', height: '460px', fontSize: '12px'}}>
+                    <div className='py-3 px-2 d-flex gap-3 text-center flex-column rounded-3 overflow-y-scroll ' style={{backgroundColor: '#B2B2B280', height: '460px', fontSize: '12px'}}>
                         <div className='d-flex gap-3 rounded-3 p-3 pb-0'>
                             <span className='w-100 fw-bold'>{'Customer Name'}</span>
                             <span className='w-100 fw-bold'>{'User Name'}</span>

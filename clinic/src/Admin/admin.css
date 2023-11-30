@@ -8,3 +8,11 @@
 input[type='file']{
     display: none
 }
+.itm-list{
+    background-color: #6f7179;
+    color: var(--white);
+    transition: all 0.5s ease;
+}
+    .itm-list:hover{
+        background-color: #b8b8b8;
+    }

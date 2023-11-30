@@ -44,6 +44,10 @@ const OrderSchema = new Schema({
         type: String,
         default: 'For Pickup'
     },
+    status: {
+        type: String,
+        default: 'Pending'
+    },
     item_list : [ItemsSchema]
 }, { timestamps: true })
 

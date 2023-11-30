@@ -84,7 +84,7 @@ const ProductPage = () => {
                     <div className='d-flex gap-4 border-bottom border-warning border-5 py-4 mb-4'>
                         <div className='py-4 col-3 px-5 text-light rounded-3 d-flex flex-column ' style={{backgroundColor: '#FFFFFF80'}}>
                             <h6>Total Products</h6>
-                            <span className='w-100 text-end fs-3 fw-bold'>{count}</span>
+                            <span className='w-100 text-end fs-3 fw-bold'>{count}<span className='fw-normal fst-italic' style={{fontSize: '14px'}}>pcs.</span></span>
                         </div>
                     </div>
                     <div className='rounded-3 p-3' style={{backgroundColor: '#B2B2B280', fontSize: '12px'}}>
