@@ -9,6 +9,7 @@ const articles = require('./Routes/articles')
 const cart = require('./Routes/cart')
 const order = require('./Routes/ordering')
 const preorder = require('./Routes/preorder')
+const history = require('./Routes/history')
 
 // express app
 const app = express()
@@ -24,6 +25,7 @@ app.use('/api/articles', articles)
 app.use('/api/cart', cart)
 app.use('/api/ordering', order)
 app.use('/api/pre-order', preorder)
+app.use('/api/history', history)
 
 // connect to db
 mongoose.connect(process.env.MONGO_URI)
