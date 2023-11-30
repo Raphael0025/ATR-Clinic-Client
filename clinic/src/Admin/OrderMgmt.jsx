@@ -66,6 +66,20 @@ const OrderMgmt = () => {
         } else if (orders.find((order) => order._id === orderId)?.status === 'Pending' && newStatus !== 'Pending') {
             setPendingOrders((prevPendingOrders) => prevPendingOrders - 1);
         }
+
+        // Update pendingOrders state based on the newStatus
+        if (newStatus === 'Completed') {
+            setCompleteOrders((prevPendingOrders) => prevPendingOrders + 1);
+        } else if (orders.find((order) => order._id === orderId)?.status === 'Completed' && newStatus !== 'Completed') {
+            setCompleteOrders((prevPendingOrders) => prevPendingOrders - 1);
+        }
+
+        // Update pendingOrders state based on the newStatus
+        if (newStatus === 'In-Progress') {
+            setProgressOrders((prevPendingOrders) => prevPendingOrders + 1);
+        } else if (orders.find((order) => order._id === orderId)?.status === 'In-Progress' && newStatus !== 'In-Progress') {
+            setProgressOrders((prevPendingOrders) => prevPendingOrders - 1);
+        }
         // If the request is successful, you can update the local state to reflect the changes immediately
         setOrders((prevOrders) =>
             prevOrders.map((order) =>
@@ -77,40 +91,45 @@ const OrderMgmt = () => {
             console.error('Error updating order status:', error.message);
         }
     };
-    
+    const subHeaders = ['Item Code', 'Item Description', 'Quantity', 'Selling Price', 'Sub Total']
+
     return (
         <main id='order' className=' container-fluid  '> 
             <section className='opaque-background rounded-2 container px-3 py-4 d-flex flex-column gap-4'> 
                 <h6 className='m-0 fw-bold text-warning '>Orders</h6>
                 <div className='d-flex flex-column'>
                     <h4 className='text-light'>Order Management</h4>
-                    <div className='d-flex gap-4 border-bottom border-warning border-5 py-4 mb-4'>
-                        <div className='py-4 col-2 px-5 text-light rounded-3 d-flex flex-column ' style={{backgroundColor: '#FFFFFF80'}}>
+                    <div className='d-flex justify-content-between gap-3 border-bottom border-warning border-5 py-4 mb-4'>
+                        <div className='py-4 w-100 px-5 text-light rounded-3 d-flex flex-column ' style={{backgroundColor: '#FFFFFF80'}}>
                             <h6>Total Orders</h6>
                             <span className='w-100 text-end fs-3 fw-bold'>{totalOrders} orders</span>
                         </div>
-                        <div className='py-4 col-2 px-5 text-light rounded-3 d-flex flex-column ' style={{backgroundColor: '#FFFFFF80'}}>
+                        <div className='py-4 w-100 px-5 text-light rounded-3 d-flex flex-column ' style={{backgroundColor: '#FFFFFF80'}}>
                             <h6>Pending Orders</h6>
                             <span className='w-100 text-end fs-3 fw-bold'>{pendingOrders} orders</span>
                         </div>
-                        <div className='py-4 col-2 px-5 text-light rounded-3 d-flex flex-column ' style={{backgroundColor: '#FFFFFF80'}}>
+                        <div className='py-4 w-100 px-5 text-light rounded-3 d-flex flex-column ' style={{backgroundColor: '#FFFFFF80'}}>
                             <h6>Completed Orders</h6>
                             <span className='w-100 text-end fs-3 fw-bold'>{completeOrders} orders</span>
                         </div>
-                        <div className='py-4 col-2 px-5 text-light rounded-3 d-flex flex-column ' style={{backgroundColor: '#FFFFFF80'}}>
+                        <div className='py-4 w-100 px-5 text-light rounded-3 d-flex flex-column ' style={{backgroundColor: '#FFFFFF80'}}>
                             <h6>In-Progress Orders</h6>
                             <span className='w-100 text-end fs-3 fw-bold'>{progressOrders} orders</span>
                         </div>
                     </div>
-                    <div className='rounded-3 p-3 text-center' style={{backgroundColor: '#B2B2B280', fontSize: '12px'}}>
+                    <div id='accordionParent' className='rounded-3 p-3 text-center accordion' style={{backgroundColor: '#B2B2B280', fontSize: '12px'}}>
                         <div className='d-flex gap-3 rounded-3 p-3 px-4 pb-0'>
-                            <span className='w-100 fw-bold'>{'Order ID'}</span>
-                            <span className='w-100 fw-bold'>{'Order Date'}</span>
-                            <span className='w-100 fw-bold'>{'Price'}</span>
-                            <span className='w-100 fw-bold'>{'Qty'}</span>
-                            <span className='w-100 fw-bold'>{'Type'}</span>
-                            <span className='w-100 fw-bold'>{'Status'}</span>
-                            <span className='w-100 fw-bold'>{'Action'}</span>
+                            <div className='w-75 d-flex gap-2'>
+                                <span className='w-100 fw-bold'>{'Order ID'}</span>
+                                <span className='w-100 fw-bold'>{'Order Date'}</span>
+                                <span className='w-100 fw-bold'>{'Price'}</span>
+                                <span className='w-100 fw-bold'>{'Qty'}</span>
+                                <span className='w-100 fw-bold'>{'Type'}</span>
+                            </div>
+                            <div className='w-25 d-flex gap-2'>
+                                <span className='w-100 fw-bold'>{'Status'}</span>
+                                <span className='w-100 fw-bold'>{'Action'}</span>
+                            </div>
                         </div>
                         <div className='py-3 px-2 d-flex gap-3 flex-column overflow-y-scroll ' style={{height: '460px'}}>
                         {loading ? (
@@ -125,31 +144,67 @@ const OrderMgmt = () => {
                         ) : (
                             <>
                             {orders && orders.map((order) => (
-                                <div className='d-flex align-items-center  gap-3 px-3 py-2 rounded-3' key={order._id} style={{backgroundColor: '#D9D9D980'}}>
-                                    <span className='w-100 text-truncate'>{order._id}</span>
-                                    <span className='w-100 text-truncate'>{order.createdAt && format(new Date(order.createdAt), 'MMM dd, yyyy')}</span>
-                                    <span className='w-100 text-truncate'>Php {order.total_amount}.00</span>
-                                    <span className='w-100 text-truncate'>{order.total_qty} pcs.</span>
-                                    <span className='w-100 text-truncate'>{order.shipping}</span>
-                                    
-                                    <div className="dropdown d-flex justify-content-center align-items-center w-100">
-                                        <button className={`btn w-100 btn-sm dropdown-toggle text-light ${order.status === 'Completed' ? 'bg-success' : order.status === 'In-Progress' ? 'bg-warning' : order.status === 'Pending' ? 'bg-secondary' : ''}`} type="button" data-bs-toggle="dropdown" aria-expanded="false" style={{fontSize: '12px'}}>
-                                            {order.status} 
-                                        </button>
-                                        <ul className="dropdown-menu" >
-                                            {['In-Progress', 'Pending', 'Completed'].map((status, index) => (
-                                                <li key={index}>
-                                                    <p className='dropdown-item' onClick={() => setStatus(order._id, status)} style={{ cursor: 'pointer' }} >
-                                                        {status}
-                                                    </p>
-                                                </li>
-                                            ))}
-                                        </ul>
+                                <div className='accordion-item rounded-3' key={order._id} style={{backgroundColor: '#D9D9D980'}}>
+                                    <div className='accordion-header d-flex align-items-center'>
+                                        <button style={{fontSize: '12px'}} className='btn d-flex gap-2 w-75 align-items-center ' type='button' data-bs-toggle='collapse' data-bs-target={`#collapse${order._id}`} aria-expanded="true" aria-controls={`collapse${order._id}`}>
+                                            <span className='w-100 text-truncate'>{order._id}</span>
+                                            <span className='w-100 text-truncate'>{order.createdAt && format(new Date(order.createdAt), 'MMM dd, yyyy')}</span>
+                                            <span className='w-100 text-truncate'>Php {order.total_amount}.00</span>
+                                            <span className='w-100 text-truncate'>{order.total_qty} pcs.</span>
+                                            <span className='w-100 text-truncate'>{order.shipping}</span>
+                                        </button>  
+                                        <div className='w-25 d-flex'>
+                                            <div className="dropdown d-flex justify-content-center align-items-center w-100">
+                                                <button className={`btn w-100 btn-sm dropdown-toggle text-light ${order.status === 'Completed' ? 'bg-success' : order.status === 'In-Progress' ? 'bg-warning' : order.status === 'Pending' ? 'bg-secondary' : ''}`} type="button" data-bs-toggle="dropdown" aria-expanded="false" style={{fontSize: '12px'}}>
+                                                    {order.status} 
+                                                </button>
+                                                <ul className="dropdown-menu" >
+                                                    {['In-Progress', 'Pending', 'Completed'].map((status, index) => (
+                                                        <li key={index}>
+                                                            <p className='dropdown-item' onClick={() => setStatus(order._id, status)} style={{ cursor: 'pointer' }} >
+                                                                {status}
+                                                            </p>
+                                                        </li>
+                                                    ))}
+                                                </ul>
+                                            </div>
+                                            <span className='w-100 text-truncate'>
+                                                <button className='btn'><IconPark path={'ic:outline-delete'} size={20}/></button>    
+                                            </span>
+                                        </div>              
                                     </div>
-                                    
-                                    <span className='w-100 text-truncate'>
-                                        <button className='btn'><IconPark path={'ic:outline-delete'} size={20}/></button>    
-                                    </span>
+                                    <div id={`collapse${order._id}`} className='accordion-collapse collapse' data-bs-parent='#accordionParent'>
+                                        <div className='accordion-body bg-light d-flex justify-content-start '>
+                                            <div className='w-50 d-flex align-items-start flex-column'>
+                                                <h6>Items</h6>
+                                                <div className='d-flex flex-column w-100 align-items-start gap-2'>
+                                                    <div className='d-flex align-items-center gap-2 text-center w-100' style={{color: '#ffffff60'}}>
+                                                        {subHeaders.map((header, indx) => (
+                                                            <span className='w-100 text-truncate text-dark' key={indx}>{header}</span>
+                                                        ))}
+                                                    </div>
+                                                    {Array.isArray(order.item_list) &&
+                                                    order.item_list.map((item, i) => (
+                                                        <div className='d-flex align-items-center gap-2 text-center w-100 py-1' key={i}>
+                                                            <span className='w-100 text-truncate'>{item.item_id}</span>
+                                                            <span className='w-100 text-truncate'>{item.item_name}</span>
+                                                            <span className='w-100 text-truncate'>{item.qty}</span>
+                                                            <span className='w-100 text-truncate'>{item.unit_price}</span>
+                                                            <span className='w-100 text-truncate'>{item.unit_price * item.qty}</span>
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                            <div className='d-flex flex-column align-items-start w-50'>
+                                                <h6>Customer Details</h6>
+                                                <div className='d-flex flex-column align-items-start gap-2'>
+                                                    <span className='fw-bold'>Customer Name: <span className='fw-normal'>{order.user_name}</span></span>
+                                                    <span className='fw-bold'>Phone: <span className='fw-normal'>{order.phone}</span></span>
+                                                    <span className='fw-bold'>Address: <span className='fw-normal'>{order.address}</span></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             ))}
                             </>

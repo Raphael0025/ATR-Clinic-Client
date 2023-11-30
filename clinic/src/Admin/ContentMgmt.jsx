@@ -71,7 +71,7 @@ const ContentMgmt = () => {
     }   
 
     return (
-        <main id='content' className=' container-fluid vh-100 '> 
+        <main id='content' className=' container-fluid pb-3 '> 
             <section className='opaque-background rounded-2 container px-3 py-4 d-flex flex-column gap-4'> 
                 <h6 className='m-0 fw-bold text-warning '>Content</h6>
                 <form onSubmit={handleSubmit} className=' d-flex flex-column gap-3'>
