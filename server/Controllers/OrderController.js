@@ -46,6 +46,24 @@ const countPending = async ( req, res ) => {
         res.status(500).json({ error: 'Internal Server Error' });
     }
 }
+const countCompleted = async ( req, res ) => {
+    try {
+        const totalComplete = await Order.countDocuments({ status: 'Completed' });
+        res.status(200).json({ totalComplete });
+    } catch (error) {
+        console.error('Error counting pending orders:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+}
+const countInProgress = async ( req, res ) => {
+    try {
+        const totalInProgress = await Order.countDocuments({ status: 'In-Progress' });
+        res.status(200).json({ totalInProgress });
+    } catch (error) {
+        console.error('Error counting pending orders:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+}
 // Create 
 const createOrder = async (req, res) => {
     const { total_qty, total_amount, shipping, courier, item_list, status, user_name, user_id, address, phone } = req.body
@@ -89,4 +107,4 @@ const deleteOrder = async (req, res) => {
     res.status(200).json(order)
 }
 
-module.exports = { getOrders, countOrders, newOrders, countPending, deleteOrder, updateOrder, createOrder }
+module.exports = { getOrders, countOrders, newOrders, countCompleted, countInProgress, countPending, deleteOrder, updateOrder, createOrder }

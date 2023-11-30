@@ -7,8 +7,9 @@ import { IconPark } from 'assets/SvgIcons'
 const OrderMgmt = () => {
     const [orders, setOrders] = useState(null)
     const [totalOrders, setTotalOrders] = useState(null)
-    const [newOrders, setNewOrders] = useState(null)
+    const [completeOrders, setCompleteOrders] = useState(null)
     const [pendingOrders, setPendingOrders] = useState(null)
+    const [progressOrders, setProgressOrders] = useState(null)
     const [loading, setLoading] = useState(true)
 
     // Fetching Data from Database
@@ -18,18 +19,21 @@ const OrderMgmt = () => {
             const response = await fetch('https://clinic-api-two.vercel.app/api/ordering')
             const count = await fetch('https://clinic-api-two.vercel.app/api/ordering/count')
             const pending = await fetch('https://clinic-api-two.vercel.app/api/ordering/pending')
-            const daily = await fetch('https://clinic-api-two.vercel.app/api/ordering/new-orders')
+            const daily = await fetch('https://clinic-api-two.vercel.app/api/ordering/complete')
+            const progress = await fetch('https://clinic-api-two.vercel.app/api/ordering/in-progress')
 
             const jsonCount = await count.json()
             const json = await response.json()
             const pendingRes = await pending.json()
             const dailyOrd = await daily.json()
+            const inProgress = await progress.json()
 
             if (response.ok) {
                 setOrders(json)
                 setTotalOrders(jsonCount.totalOrders)
                 setPendingOrders(pendingRes.totalPendingOrders)
-                setNewOrders(dailyOrd.newOrdersCount)
+                setCompleteOrders(dailyOrd.totalComplete)
+                setProgressOrders(inProgress.totalInProgress)
             }
         } catch (error) {
             console.error('Error fetching data:', error);
@@ -81,17 +85,21 @@ const OrderMgmt = () => {
                 <div className='d-flex flex-column'>
                     <h4 className='text-light'>Order Management</h4>
                     <div className='d-flex gap-4 border-bottom border-warning border-5 py-4 mb-4'>
-                        <div className='py-4 col-3 px-5 text-light rounded-3 d-flex flex-column ' style={{backgroundColor: '#FFFFFF80'}}>
+                        <div className='py-4 col-2 px-5 text-light rounded-3 d-flex flex-column ' style={{backgroundColor: '#FFFFFF80'}}>
                             <h6>Total Orders</h6>
                             <span className='w-100 text-end fs-3 fw-bold'>{totalOrders} orders</span>
                         </div>
-                        <div className='py-4 col-3 px-5 text-light rounded-3 d-flex flex-column ' style={{backgroundColor: '#FFFFFF80'}}>
+                        <div className='py-4 col-2 px-5 text-light rounded-3 d-flex flex-column ' style={{backgroundColor: '#FFFFFF80'}}>
                             <h6>Pending Orders</h6>
                             <span className='w-100 text-end fs-3 fw-bold'>{pendingOrders} orders</span>
                         </div>
-                        <div className='py-4 col-3 px-5 text-light rounded-3 d-flex flex-column ' style={{backgroundColor: '#FFFFFF80'}}>
-                            <h6>New Orders</h6>
-                            <span className='w-100 text-end fs-3 fw-bold'>{newOrders} orders</span>
+                        <div className='py-4 col-2 px-5 text-light rounded-3 d-flex flex-column ' style={{backgroundColor: '#FFFFFF80'}}>
+                            <h6>Completed Orders</h6>
+                            <span className='w-100 text-end fs-3 fw-bold'>{completeOrders} orders</span>
+                        </div>
+                        <div className='py-4 col-2 px-5 text-light rounded-3 d-flex flex-column ' style={{backgroundColor: '#FFFFFF80'}}>
+                            <h6>In-Progress Orders</h6>
+                            <span className='w-100 text-end fs-3 fw-bold'>{progressOrders} orders</span>
                         </div>
                     </div>
                     <div className='rounded-3 p-3 text-center' style={{backgroundColor: '#B2B2B280', fontSize: '12px'}}>
@@ -125,11 +133,11 @@ const OrderMgmt = () => {
                                     <span className='w-100 text-truncate'>{order.shipping}</span>
                                     
                                     <div className="dropdown d-flex justify-content-center align-items-center w-100">
-                                        <button className={`btn w-100 btn-sm dropdown-toggle text-light ${order.status === 'Received' ? 'bg-success' : order.status === 'Processing' ? 'bg-warning' : order.status === 'Pending' ? 'bg-secondary' : order.status === 'Canceled' ? 'bg-danger' : ''}`} type="button" data-bs-toggle="dropdown" aria-expanded="false" style={{fontSize: '12px'}}>
+                                        <button className={`btn w-100 btn-sm dropdown-toggle text-light ${order.status === 'Completed' ? 'bg-success' : order.status === 'In-Progress' ? 'bg-warning' : order.status === 'Pending' ? 'bg-secondary' : ''}`} type="button" data-bs-toggle="dropdown" aria-expanded="false" style={{fontSize: '12px'}}>
                                             {order.status} 
                                         </button>
                                         <ul className="dropdown-menu" >
-                                            {['Received', 'Processing', 'Pending', 'Canceled'].map((status, index) => (
+                                            {['In-Progress', 'Pending', 'Completed'].map((status, index) => (
                                                 <li key={index}>
                                                     <p className='dropdown-item' onClick={() => setStatus(order._id, status)} style={{ cursor: 'pointer' }} >
                                                         {status}
