@@ -20,7 +20,7 @@ const countNewUsersInCurrentMonth = async (req, res) => {
         const lastDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
 
         // Query to count new users registered in the current month
-        const totalNewUsers = await Users.countDocuments({
+        const totalNewUsers = await User.countDocuments({
             createdAt: {
                 $gte: firstDayOfMonth,
                 $lte: lastDayOfMonth,
@@ -38,7 +38,7 @@ const countNewUsersInCurrentMonth = async (req, res) => {
 // API function to count total documents in the User collection
 const countUsers = async (req, res) => {
     try {
-        const totalUsers = await Users.countDocuments({});
+        const totalUsers = await User.countDocuments({});
         res.status(200).json({ totalUsers });
     } catch (error) {
         res.status(500).json({ error: 'Internal Server Error' });
