@@ -17,6 +17,26 @@ const countOrders = async (req, res) => {
     }
 }
 
+const newOrders = async (req, res) => {
+    try {
+        // Get the current date and time
+        const currentDate = new Date();
+        
+        // Set the start of the day
+        currentDate.setHours(0, 0, 0, 0);
+
+        // Query to find new orders added on the day
+        const newOrdersCount = await Order.countDocuments({
+            createdAt: { $gte: currentDate }
+        });
+
+        res.status(200).json({ newOrdersCount });
+    } catch (error) {
+        console.error('Error counting new orders:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+}
+
 const countPending = async ( req, res ) => {
     try {
         const totalPendingOrders = await Order.countDocuments({ status: 'Pending' });
@@ -69,4 +89,4 @@ const deleteOrder = async (req, res) => {
     res.status(200).json(order)
 }
 
-module.exports = { getOrders, countOrders, countPending, deleteOrder, updateOrder, createOrder }
+module.exports = { getOrders, countOrders, newOrders, countPending, deleteOrder, updateOrder, createOrder }

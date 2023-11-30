@@ -18,15 +18,18 @@ const OrderMgmt = () => {
             const response = await fetch('https://clinic-api-two.vercel.app/api/ordering')
             const count = await fetch('https://clinic-api-two.vercel.app/api/ordering/count')
             const pending = await fetch('https://clinic-api-two.vercel.app/api/ordering/pending')
+            const daily = await fetch('https://clinic-api-two.vercel.app/api/ordering/new-orders')
 
             const jsonCount = await count.json()
             const json = await response.json()
             const pendingRes = await pending.json()
+            const dailyOrd = await daily.json()
 
             if (response.ok) {
                 setOrders(json)
                 setTotalOrders(jsonCount.totalOrders)
                 setPendingOrders(pendingRes.totalPendingOrders)
+                setNewOrders(dailyOrd.newOrdersCount)
             }
         } catch (error) {
             console.error('Error fetching data:', error);
@@ -53,13 +56,18 @@ const OrderMgmt = () => {
             throw new Error('Failed to update order status');
         }
     
-          // If the request is successful, you can update the local state to reflect the changes immediately
+        // Update pendingOrders state based on the newStatus
+        if (newStatus === 'Pending') {
+            setPendingOrders((prevPendingOrders) => prevPendingOrders + 1);
+        } else if (orders.find((order) => order._id === orderId)?.status === 'Pending' && newStatus !== 'Pending') {
+            setPendingOrders((prevPendingOrders) => prevPendingOrders - 1);
+        }
+        // If the request is successful, you can update the local state to reflect the changes immediately
         setOrders((prevOrders) =>
             prevOrders.map((order) =>
                 order._id === orderId ? { ...order, status: newStatus } : order
             )
         );
-    
             console.log('Order status updated successfully');
         } catch (error) {
             console.error('Error updating order status:', error.message);
@@ -74,16 +82,16 @@ const OrderMgmt = () => {
                     <h4 className='text-light'>Order Management</h4>
                     <div className='d-flex gap-4 border-bottom border-warning border-5 py-4 mb-4'>
                         <div className='py-4 col-3 px-5 text-light rounded-3 d-flex flex-column ' style={{backgroundColor: '#FFFFFF80'}}>
-                            <h6>New Orders</h6>
-                            <span className='w-100 text-end fs-3 fw-bold'>{totalOrders}</span>
+                            <h6>Total Orders</h6>
+                            <span className='w-100 text-end fs-3 fw-bold'>{totalOrders} orders</span>
                         </div>
                         <div className='py-4 col-3 px-5 text-light rounded-3 d-flex flex-column ' style={{backgroundColor: '#FFFFFF80'}}>
                             <h6>Pending Orders</h6>
-                            <span className='w-100 text-end fs-3 fw-bold'>150</span>
+                            <span className='w-100 text-end fs-3 fw-bold'>{pendingOrders} orders</span>
                         </div>
                         <div className='py-4 col-3 px-5 text-light rounded-3 d-flex flex-column ' style={{backgroundColor: '#FFFFFF80'}}>
-                            <h6>Picked-Up Orders</h6>
-                            <span className='w-100 text-end fs-3 fw-bold'>{pendingOrders}</span>
+                            <h6>New Orders</h6>
+                            <span className='w-100 text-end fs-3 fw-bold'>{newOrders} orders</span>
                         </div>
                     </div>
                     <div className='rounded-3 p-3 text-center' style={{backgroundColor: '#B2B2B280', fontSize: '12px'}}>
