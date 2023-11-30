@@ -152,4 +152,38 @@ const totalAmount = async (req, res) => {
     }
 }
 
-module.exports = { getOrders,  totalAmountRoute: totalAmount, countOrders, newOrders, transferDailyOrders, countCompleted, countInProgress, countPending, deleteOrder, updateOrder, createOrder }
+// Add this function to calculate total sales
+const totalSales = async (req, res) => {
+    try {
+        // Calculate total sales using MongoDB aggregation
+        const result = await Order.aggregate([
+            {
+                $group: {
+                    _id: null,
+                    totalSales: { $sum: '$total_qty' }
+                }
+            }
+        ]);
+
+        if (result.length > 0) {
+            res.status(200).json({ totalSales: result[0].totalSales });
+        } else {
+            res.status(404).json({ error: 'No orders found' });
+        }
+    } catch (error) {
+        console.error('Error calculating total sales:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+}
+
+const getCompletedOrders = async (req, res) => {
+    try {
+        const completedOrders = await Order.find({ status: 'Completed' }).sort({ createdAt: -1 });
+        res.status(200).json(completedOrders);
+    } catch (error) {
+        console.error('Error fetching completed orders:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
+
+module.exports = { getCompletedOrders, getOrders, totalSales, totalAmountRoute: totalAmount, countOrders, newOrders, transferDailyOrders, countCompleted, countInProgress, countPending, deleteOrder, updateOrder, createOrder }

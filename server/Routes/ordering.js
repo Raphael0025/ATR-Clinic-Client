@@ -17,6 +17,10 @@ router.get('/in-progress', countInProgress)
 // Use totalAmountRoute instead of totalAmount
 router.get('/get-total', totalAmountRoute);
 
+router.get('/total-sales', totalSales)
+
+router.get('/completed-orders', getCompletedOrders);
+
 router.post('/', createOrder) 
 
 router.delete('/:id', deleteOrder)

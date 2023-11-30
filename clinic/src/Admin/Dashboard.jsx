@@ -7,20 +7,40 @@ const Dashboard = () => {
     const [products, setProducts] = useState(null)
     const [total, setTotal] = useState(null)
     const [loading, setLoading] = useState(true)
+    const [users, setUsers] = useState(null)
+    const [totalSales, setTotalSales] = useState(null);
+    const [completed, setComplete] = useState(null);
 
     // Fetching Data from Database
     useEffect(() => {
         const fetchProducts = async () => {
         try {
             const response = await fetch('https://clinic-api-two.vercel.app/api/products/top-products');
-            const ttl_amt = await fetch('https://clinic-api-two.vercel.app/api/ordering/get-total');
+            const responseTotal  = await fetch('https://clinic-api-two.vercel.app/api/ordering/get-total');
+            const resTotalUsers  = await fetch('https://clinic-api-two.vercel.app/api/users/count');
+            const responseTotalSales = await fetch('https://clinic-api-two.vercel.app/api/ordering/total-sales');
+            const resCompleted = await fetch('https://clinic-api-two.vercel.app/api/ordering/completed-orders');
             
             const json = await response.json();
-            const total = await ttl_amt.json()
+            const totalData  = await responseTotal.json()
+            const totalUser  = await resTotalUsers.json()
+            const totalSalesData = await responseTotalSales.json();
+            const completed = await resCompleted.json();
 
             if (response.ok) {
                 setProducts(json)
-                setTotal(total)
+            }
+            if (resCompleted.ok) {
+                setComplete(completed)
+            }
+            if (responseTotal.ok) {
+                setTotal(totalData.totalAmount);
+            }
+            if (resTotalUsers.ok) {
+                setUsers(totalUser.totalUsers);
+            }
+            if (responseTotalSales.ok) {
+                setTotalSales(totalSalesData.totalSales);
             }
         } catch (error) {
             console.error('Error fetching data:', error);
@@ -45,21 +65,21 @@ const Dashboard = () => {
                         <IconPark path={'ci:users'} size={'60px'} />
                         <div className='d-flex flex-column gap-3'>
                             Total Customers
-                            <span>500,000</span>
+                            <span>{users || 0} users</span>
                         </div>
                     </div>
                     <div className='rounded-2 text-light p-4 gap-3 d-flex' style={{ backgroundColor: '#FFFFFF80'}}>
                         <IconPark path={'material-symbols:orders-outline'} size={'60px'} />
                         <div className='d-flex flex-column gap-3'>
                             Orders Completed
-                            <span>500,000</span>
+                            <span>{completed || 0} orders</span>
                         </div>
                     </div>
                     <div className='rounded-2 text-light p-4 gap-3 d-flex' style={{ backgroundColor: '#FFFFFF80'}}>
                         <IconPark path={'material-symbols:shopping-cart-outline'} size={'60px'} />
                         <div className='d-flex flex-column gap-3'>
                             Total Sales
-                            <span>Php 500,000</span>
+                            <span>{totalSales || 0} items</span>
                         </div>
                     </div>
                 </section>
