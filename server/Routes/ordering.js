@@ -7,7 +7,7 @@ router.get('/', getOrders)
 
 router.get('/count', countOrders)
 
-router.get('/count-pending', countPending)
+router.get('/pending', countPending)
 
 router.post('/', createOrder) 
 

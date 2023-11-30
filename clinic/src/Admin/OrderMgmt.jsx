@@ -17,7 +17,7 @@ const OrderMgmt = () => {
         try {
             const response = await fetch('https://clinic-api-two.vercel.app/api/ordering')
             const count = await fetch('https://clinic-api-two.vercel.app/api/ordering/count')
-            const pending = await fetch('https://clinic-api-two.vercel.app/api/ordering/count-pending')
+            const pending = await fetch('https://clinic-api-two.vercel.app/api/ordering/pending')
 
             const jsonCount = await count.json()
             const json = await response.json()
