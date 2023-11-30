@@ -90,7 +90,7 @@ const OrderMgmt = () => {
         } catch (error) {
             console.error('Error updating order status:', error.message);
         }
-    };
+    }
     const subHeaders = ['Item Code', 'Item Description', 'Quantity', 'Selling Price', 'Sub Total']
 
     return (

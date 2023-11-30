@@ -1,5 +1,7 @@
 const Order = require('../Models/OrderModel')
 const mongoose = require('mongoose')
+const History = require('../Models/HistoryModel')
+const schedule = require('node-schedule')
 
 // Get 
 const getOrders = async (req, res) => {
@@ -107,4 +109,23 @@ const deleteOrder = async (req, res) => {
     res.status(200).json(order)
 }
 
-module.exports = { getOrders, countOrders, newOrders, countCompleted, countInProgress, countPending, deleteOrder, updateOrder, createOrder }
+// Add this function to transfer daily orders to history
+const transferDailyOrders = async () => {
+    try {
+        const currentDate = new Date();
+        currentDate.setHours(0, 0, 0, 0);
+
+        const dailyOrders = await Order.find({ createdAt: { $gte: currentDate } });
+        await History.insertMany(dailyOrders);
+        await Order.deleteMany({ createdAt: { $gte: currentDate } });
+
+        console.log('Daily orders transferred successfully.');
+    } catch (error) {
+        console.error('Error transferring daily orders:', error);
+    }
+};
+
+// Schedule the daily transfer at midnight
+schedule.scheduleJob('0 0 * * *', transferDailyOrders);
+
+module.exports = { getOrders, countOrders, newOrders, transferDailyOrders, countCompleted, countInProgress, countPending, deleteOrder, updateOrder, createOrder }
