@@ -152,4 +152,4 @@ const totalAmount = async (req, res) => {
     }
 }
 
-module.exports = { getOrders, totalAmount, countOrders, newOrders, transferDailyOrders, countCompleted, countInProgress, countPending, deleteOrder, updateOrder, createOrder }
+module.exports = { getOrders,  totalAmountRoute: totalAmount, countOrders, newOrders, transferDailyOrders, countCompleted, countInProgress, countPending, deleteOrder, updateOrder, createOrder }

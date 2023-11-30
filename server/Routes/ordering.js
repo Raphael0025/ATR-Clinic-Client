@@ -14,7 +14,7 @@ router.get('/pending', countPending)
 router.get('/complete', countCompleted)
 
 router.get('/in-progress', countInProgress)
-
+// Use totalAmountRoute instead of totalAmount
 router.get('/get-total', totalAmountRoute);
 
 router.post('/', createOrder) 
