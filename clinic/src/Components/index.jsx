@@ -10,7 +10,8 @@ import SideBar from './SideBar'
 import Aside from './Aside'
 import CreateProductModal from './Modals/CreateProductModal'
 import AddToCart from './Modals/AddToCart'
+import ViewItem from './Modals/ViewItem'
 
 import './component.css'
 
-export { SideBar, Navbar, Aside, GradientHeader, AddToCart, CreateProductModal, Footer, ToolTip, Testimonials, SliderCard, CardItem, ProductShowcase }
+export { SideBar, Navbar, Aside, ViewItem, GradientHeader, AddToCart, CreateProductModal, Footer, ToolTip, Testimonials, SliderCard, CardItem, ProductShowcase }

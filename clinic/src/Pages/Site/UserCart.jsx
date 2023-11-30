@@ -176,7 +176,7 @@ const UserCart = () => {
                                         <span className='m-0 w-100 text-center'>{item.courier}</span>
                                         <span className='m-0 w-100 text-center text-success'>{item.shipping} <IconPark size={24} path={item.shipping === 'For Delivery' ? 'tabler:truck-delivery' : 'icon-park-outline:delivery'} /></span>
                                         <button type='button' className='btn btn-sm btn-outline-danger' onClick={() => handleDeleteItem(item._id)}>
-                                            Delete
+                                            <IconPark path={'mdi:trash-can-outline'} size={23} />
                                         </button>
                                     </div>
                                 ))

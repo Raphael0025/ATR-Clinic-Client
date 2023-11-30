@@ -60,7 +60,7 @@ const Dashboard = () => {
                 </section>
                 <section className='d-flex flex-column py-5 px-4'>
                     <h6 className='text-light fw-bold fs-4'>Top Products</h6> 
-                    <div className='d-flex justify-content-between align-items-center w-100'>
+                    <div className='d-flex justify-content-center gap-5 align-items-center w-100'>
                         {loading ? (
                             // Display loading skeleton while data is being fetched
                             <div className='d-flex gap-3 p-5'>

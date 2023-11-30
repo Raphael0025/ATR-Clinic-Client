@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
-import { CreateProductModal } from 'Components' 
+import { CreateProductModal, ViewItem } from 'Components' 
 import { IconPark } from 'assets/SvgIcons'
+import { useItems } from 'Context/ItemsContext'
 
 const ProductPage = () => {
     const [products, setProducts] = useState(null)
     const [loading, setLoading] = useState(true)
+    const [selectedItem, setSelectedItem] = useState(null); // Add this state
     const [count, setCount] = useState(0)
 
     // Fetching Data from Database
@@ -67,6 +69,10 @@ const ProductPage = () => {
         }
     }
     
+    const handleEdit = (product) => {
+        setSelectedItem(product);
+    }
+
     return (
         <main id='product' className=' container-fluid '> 
             <section className='opaque-background rounded-2 container px-3 py-4 d-flex flex-column gap-4'> 
@@ -109,7 +115,7 @@ const ProductPage = () => {
                                     <span className='w-100'>Php {product.unit_price}</span>
                                     <span className='w-100'>Php {product.soldCount * product.unit_price}</span>
                                     <span className='w-100' style={{fontSize: '12px'}} role='cell'>
-                                        <button className='btn btn-sm text-dark-subtle'>  
+                                        <button data-bs-toggle='modal' type='button' onClick={() => handleEdit(product)} data-bs-target='#viewItem' className='btn btn-sm text-dark-subtle'>  
                                             <IconPark path={'akar-icons:edit'} size={23} />
                                         </button>
                                         <button className='btn btn-sm text-dark-subtle' 
@@ -127,6 +133,7 @@ const ProductPage = () => {
                 </div>
             </section>
             <CreateProductModal />
+            <ViewItem selectedItem={selectedItem} />
         </main>
     )
 }
