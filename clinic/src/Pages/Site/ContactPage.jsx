@@ -1,5 +1,6 @@
 import React from 'react'
 import {GradientHeader, ToolTip} from 'Components'
+import doc from 'assets/extra/doc.jpg'
 import {HiMail} from 'react-icons/hi'
 import { BiLogoFacebookCircle, BiSolidPhone } from 'react-icons/bi'
 import avatar from 'assets/extra/Vector.png'
@@ -10,9 +11,9 @@ const ContactPage = () => {
             <header>
                 <GradientHeader title={'Contacts'} />
             </header>
-            <section className='d-flex flex-column align-items-center w-100 gap-4 py-5'>
+            <section className='d-flex flex-column align-items-center justify-content-center container gap-4 py-5'>
                 <div className='d-flex flex-column align-items-center gap-2'>
-                    <img src={avatar} alt='avatar' width='50%'/>
+                    <img src={doc || avatar} alt='avatar' width='20%'/>
                     <h4 className='text-uppercase mt-3 fw-bolder'>Rebecca C. Hidalgo</h4>
                     <hr className='w-100 m-0 border border-success border-2 opacity-100' />
                     <h5>Contact Person</h5>

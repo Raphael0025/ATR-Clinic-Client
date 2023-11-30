@@ -1,5 +1,5 @@
 const express = require('express')
-const { getOrders, deleteOrder, getCompletedOrders, totalSales, updateOrder, totalAmountRoute, newOrders, countCompleted, countInProgress, countPending, createOrder, countOrders } = require('../Controllers/OrderController')
+const { getOrders, deleteOrder, totalSales, updateOrder, totalAmountRoute, newOrders, countCompleted, countInProgress, countPending, createOrder, countOrders } = require('../Controllers/OrderController')
 
 const router = express.Router()
 
@@ -18,8 +18,6 @@ router.get('/in-progress', countInProgress)
 router.get('/get-total', totalAmountRoute);
 
 router.get('/total-sales', totalSales)
-
-router.get('/completed-orders', getCompletedOrders);
 
 router.post('/', createOrder) 
 

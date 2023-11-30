@@ -1,7 +1,10 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
-const ForgotPassword = () => {
+    const ForgotPassword = () => {
+
+    const navigate = useNavigate();
+    
     return (
         <main className='backgroundLogin container-fluid d-flex p-5 m-0 vh-100'>
             <section className='container d-flex justify-content-center align-items-center mt-5 px-5'>
@@ -23,7 +26,6 @@ const ForgotPassword = () => {
                         </div>
                         <div className='d-flex align-items-center justify-content-start p-0 container'>
                             <span className='txt text-dark'>Don't have an account yet?</span>
-                            <Link className='text-success text-decoration-none'><span className='txt ms-2 lnk'>Register here</span></Link>
                         </div>
                     </form>
                 </div>

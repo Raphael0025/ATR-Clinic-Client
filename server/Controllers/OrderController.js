@@ -176,14 +176,4 @@ const totalSales = async (req, res) => {
     }
 }
 
-const getCompletedOrders = async (req, res) => {
-    try {
-        const completedOrders = await Order.find({ status: 'Completed' }).sort({ createdAt: -1 });
-        res.status(200).json(completedOrders);
-    } catch (error) {
-        console.error('Error fetching completed orders:', error);
-        res.status(500).json({ error: 'Internal Server Error' });
-    }
-};
-
-module.exports = { getCompletedOrders, getOrders, totalSales, totalAmountRoute: totalAmount, countOrders, newOrders, transferDailyOrders, countCompleted, countInProgress, countPending, deleteOrder, updateOrder, createOrder }
+module.exports = { getOrders, totalSales, totalAmountRoute: totalAmount, countOrders, newOrders, transferDailyOrders, countCompleted, countInProgress, countPending, deleteOrder, updateOrder, createOrder }

@@ -18,30 +18,30 @@ const Dashboard = () => {
             const response = await fetch('https://clinic-api-two.vercel.app/api/products/top-products');
             const responseTotal  = await fetch('https://clinic-api-two.vercel.app/api/ordering/get-total');
             const resTotalUsers  = await fetch('https://clinic-api-two.vercel.app/api/users/count');
-           // const responseTotalSales = await fetch('https://clinic-api-two.vercel.app/api/ordering/total-sales');
-           // const resCompleted = await fetch('https://clinic-api-two.vercel.app/api/ordering/completed-orders');
+            const responseTotalSales = await fetch('https://clinic-api-two.vercel.app/api/ordering/total-sales');
+            const resCompleted = await fetch('https://clinic-api-two.vercel.app/api/ordering/complete');
             
             const json = await response.json();
             const totalData  = await responseTotal.json()
             const totalUser  = await resTotalUsers.json()
-           // const totalSalesData = await responseTotalSales.json();
-          //  const completed = await resCompleted.json();
+            const totalSalesData = await responseTotalSales.json();
+            const completed = await resCompleted.json();
 
             if (response.ok) {
                 setProducts(json)
             }
-            // if (resCompleted.ok) {
-            //     setComplete(completed)
-            // }
+            if (resCompleted.ok) {
+                setComplete(completed.totalComplete)
+            }
             if (responseTotal.ok) {
                 setTotal(totalData.totalAmount);
             }
             if (resTotalUsers.ok) {
                 setUsers(totalUser.totalUsers);
             }
-            // if (responseTotalSales.ok) {
-            //     setTotalSales(totalSalesData.totalSales);
-            // }
+            if (responseTotalSales.ok) {
+                setTotalSales(totalSalesData.totalSales);
+            }
         } catch (error) {
             console.error('Error fetching data:', error);
         } finally {
