@@ -6,6 +6,27 @@ const CustomerMgmt = () => {
     const [users, setUsers] = useState(null)
     const [loading, setLoading] = useState(true)
     const [count, setCount] = useState(0)
+    const [newUsers, setNewUsers] = useState(0)
+
+    // Fetching Data from Database
+    useEffect(() => {
+        const fetchCount = async () => {
+        try {
+            const response = await fetch('https://clinic-api-two.vercel.app/api/users/new-count');
+            const json = await response.json()
+
+            if (response.ok) {
+                setNewUsers(json.totalNewUsers)
+            }
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        } finally {
+            // Set loading to false once data is fetched
+            setLoading(false);
+        }
+        };
+        fetchCount()
+    }, [])
 
     // Fetching Data from Database
     useEffect(() => {
@@ -60,7 +81,7 @@ const CustomerMgmt = () => {
                         </div>
                         <div className='py-4 col-3 px-5 text-light rounded-3 d-flex flex-column ' style={{backgroundColor: '#FFFFFF80'}}>
                             <h6>New Customers</h6>
-                            <span className='w-100 text-end fs-3 fw-bold'>150</span>
+                            <span className='w-100 text-end fs-3 fw-bold'>{newUsers}</span>
                         </div>
                     </div>
                     <div className='py-3 px-2 d-flex gap-3 flex-column rounded-3 overflow-y-scroll ' style={{backgroundColor: '#B2B2B280', height: '460px', fontSize: '12px'}}>
