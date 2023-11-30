@@ -1,5 +1,5 @@
 const express = require('express')
-const { getOrders, deleteOrder, updateOrder, totalAmountRoute, newOrders, countCompleted, countInProgress, countPending, createOrder, countOrders } = require('../Controllers/OrderController')
+const { getOrders, deleteOrder, getCompletedOrders, totalSales, updateOrder, totalAmountRoute, newOrders, countCompleted, countInProgress, countPending, createOrder, countOrders } = require('../Controllers/OrderController')
 
 const router = express.Router()
 
