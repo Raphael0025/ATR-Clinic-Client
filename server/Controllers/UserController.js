@@ -1,5 +1,6 @@
 const User = require('../Models/UserModel')
 const mongoose = require('mongoose')
+const bcrypt = require('bcrypt');
 
 // get all users
 const getUsers = async (req, res) => {
@@ -85,6 +86,60 @@ const deleteUser = async (req, res) => {
     res.status(200).json(user)
 }
 
+// user signup
+const signupUser = async (req, res) => {
+    const { first_name, last_name, user_name, email, password, gender, user_type, address, profile, phone } = req.body;
+
+    try {
+        // Hash the password before saving it to the database
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        const user = await User.create({
+            first_name,
+            last_name,
+            user_name,
+            email,
+            password: hashedPassword,
+            gender,
+            user_type,
+            address,
+            profile,
+            phone,
+        });
+
+        res.status(200).json(user);
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+};
+
+// user login
+const loginUser = async (req, res) => {
+    const { email, password } = req.body;
+
+    try {
+        // Find user by email
+        const user = await User.findOne({ email });
+
+        if (!user) {
+            return res.status(401).json({ error: 'Invalid credentials' });
+        }
+
+        // Compare the entered password with the hashed password in the database
+        const passwordMatch = await bcrypt.compare(password, user.password);
+
+        if (!passwordMatch) {
+            return res.status(401).json({ error: 'Invalid credentials' });
+        }
+
+        // You may want to generate and send a token for authentication here
+
+        res.status(200).json({ message: 'Login successful' });
+    } catch (error) {
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
+
 // update user
 const updateUser = async (req, res) => {
     const { id } = req.params
@@ -101,21 +156,10 @@ const updateUser = async (req, res) => {
     res.status(200).json(user)
 }
 
-//login user
-
-const signupUser = async (req, res) => {
-    const { email, password } = req.body
-    try{
-        const user = await User.signup(email, password)
-        res.status(200).json({email, user})
-    }catch(error){
-        res.status(400).json({error: error.message})
-    }
-}
-
 module.exports = {
-    getUsers,
+    getUsers, 
     signupUser,
+    loginUser,
     getUserById,
     countUsers,
     countNewUsersInCurrentMonth,
