@@ -4,48 +4,35 @@ import logo from 'assets/logo/ATR Skin Care Logo.png';
 import { useAuth } from 'Context/AuthContext'; // Import the useAuth hook
 
 const LoginPage = () => {
-    const { login } = useAuth();
+    const { login, setUser } = useAuth();
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [allUserData, setAllUserData] = useState([]);
-
-    useEffect(() => {
-        const fetchUserData = async () => {
-            try {
-                const response = await fetch('https://clinic-api-two.vercel.app/api/users');
-                const userData = await response.json();
-                setAllUserData(userData);
-            } catch (error) {
-                console.error('Error fetching user data:', error);
-            }
-        };
-
-        fetchUserData();
-    }, []);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const isValidUser = allUserData.some(
-            (user) => user.email === email && user.password === password
-        );
+        try {
+            // Fetch all user data
+            const response = await fetch('https://clinic-api-two.vercel.app/api/users');
+            const allUserData = await response.json();
 
-        if (isValidUser) {
-            // Dynamically determine user type by iterating through the fetched data
-            const user_type = allUserData.find(
-                (user) => user.email === email
-            )?.user_type || 'customer';
+            // Iterate through fetched data to find the user
+            const user = allUserData.find((user) => user.email === email && user.password === password);
+            console.log(user)
+            if (user) {
+                // Store all user data in AuthContext
+                console.log(user)
+                login(user);
 
-            // Simulate a login by storing user information in the context
-            login({ email, user_type });
-
-            alert(email, user_type);
-            // Redirect based on user type
-            navigate(user_type === 'admin' ? '/admin/dashboard' : '/featured');
-        } else {
-            // Handle authentication failure
-            alert('Invalid credentials');
+                // Redirect based on user type
+                navigate(user.user_type === 'admin' ? '/admin/dashboard' : '/featured');
+            } else {
+                // Handle authentication failure
+                alert('Invalid credentials');
+            }
+        } catch (error) {
+            console.error('Error fetching user data:', error);
         }
     };
 
