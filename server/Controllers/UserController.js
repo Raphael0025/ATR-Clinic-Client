@@ -139,13 +139,26 @@ const loginUser = async (req, res) => {
         res.status(500).json({ error: 'Internal Server Error' });
     }
 };
-const jwt = require('jsonwebtoken');
 
-const generateToken = (userId, userType) => {
-    const secretKey = 'raphdev';
-    const token = jwt.sign({ userId, userType }, secretKey, { expiresIn: '1h' });
-    return token;
-};
+const loginUser2 = async (req, res) => {
+    const { email, password } = req.body;
+  
+    try {
+      const user = await User.findOne({ email });
+  
+      if (!user) {
+        return res.status(401).json({ error: 'Invalid credentials' });
+      }
+  
+      if (password !== user.password) {
+        return res.status(401).json({ error: 'Invalid credentials' });
+      }
+  
+      res.status(200).json({ message: 'Login successful' });
+    } catch (error) {
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  };
 
 // update user
 const updateUser = async (req, res) => {
@@ -166,6 +179,7 @@ module.exports = {
     getUsers, 
     signupUser,
     loginUser,
+    loginUser2,
     getUserById,
     countUsers,
     countNewUsersInCurrentMonth,
