@@ -1,54 +1,51 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import logo from 'assets/logo/ATR Skin Care Logo.png';
 import { useAuth } from 'Context/AuthContext'; // Import the useAuth hook
 
 const LoginPage = () => {
-    const { login } = useAuth(); 
+    const { login } = useAuth();
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [allUserData, setAllUserData] = useState([]);
 
-    const handleSubmit = async () => {
-        try {
-            const response = await fetch('https://clinic-api-two.vercel.app/api/users/user-login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ email, password }),
-            });
-
-            const data = await response.json();
-            // Assuming a successful login, store the user credentials in the context
-            console.log('Login successful:', data);
-            console.log('User type:', data.user_type);
-            if (response.ok) {
-                console.log('Login successful:', data);
-
-                // Assuming a successful login, store the user credentials in the context
-                login({ email, password });
-
-                // Log user type to check if it's retrieved correctly
-                console.log('User type:', data.user_type);
-
-                // Check user type and redirect accordingly
-                if (data.user_type === 'admin') {
-                    navigate('/admin/dashboard');
-                } else {
-                    navigate('/featured');
-                }
-            } else {
-                console.error('Login failed:', data.error);
-
-                // Display an error message to the user
-                // For example, set a state variable to show an error message in the UI
+    useEffect(() => {
+        const fetchUserData = async () => {
+            try {
+                const response = await fetch('https://clinic-api-two.vercel.app/api/users');
+                const userData = await response.json();
+                setAllUserData(userData);
+            } catch (error) {
+                console.error('Error fetching user data:', error);
             }
-        } catch (error) {
-            console.error('Error during login:', error);
+        };
 
-            // Handle other errors (e.g., network issues)
-            // For example, set a state variable to show a generic error message in the UI
+        fetchUserData();
+    }, []);
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        const isValidUser = allUserData.some(
+            (user) => user.email === email && user.password === password
+        );
+
+        if (isValidUser) {
+            // Dynamically determine user type by iterating through the fetched data
+            const user_type = allUserData.find(
+                (user) => user.email === email
+            )?.user_type || 'customer';
+
+            // Simulate a login by storing user information in the context
+            login({ email, user_type });
+
+            alert(email, user_type);
+            // Redirect based on user type
+            navigate(user_type === 'admin' ? '/admin/dashboard' : '/featured');
+        } else {
+            // Handle authentication failure
+            alert('Invalid credentials');
         }
     };
 
