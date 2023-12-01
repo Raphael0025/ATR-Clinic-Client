@@ -21,7 +21,7 @@ const Dashboard = () => {
             const responseTotalSales = await fetch('https://clinic-api-two.vercel.app/api/ordering/total-sales');
             const resCompleted = await fetch('https://clinic-api-two.vercel.app/api/ordering/complete');
             
-            const json = await response.json();
+            const json = await response.json(); 
             const totalData  = await responseTotal.json()
             const totalUser  = await resTotalUsers.json()
             const totalSalesData = await responseTotalSales.json();

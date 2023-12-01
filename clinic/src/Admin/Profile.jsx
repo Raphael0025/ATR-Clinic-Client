@@ -8,9 +8,6 @@ const Profile = () => {
     const { user } = useAuth();
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
-        title: '',
-        description: '',
-        post_img: '',
         ...user, // Initialize formData with user data
     });
 
@@ -47,26 +44,26 @@ const Profile = () => {
 
     const handleSave = async () => {
         try {
-            // Assuming you have an API endpoint to update user data
             const response = await fetch(`https://clinic-api-two.vercel.app/api/users/${user._id}`, {
-                method: 'PATCH', // or 'POST' depending on your API
+                method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
-                    // Add any other headers needed for authentication or other purposes
                 },
                 body: JSON.stringify(formData),
             });
-
+    
+            const responseData = await response.json();
+    
             if (response.ok) {
-                // Update local state or perform any other actions upon successful save
-                console.log('Profile updated successfully!');
+                console.log('Profile updated successfully!', responseData);
             } else {
-                console.error('Failed to update profile:', response.statusText);
+                console.error('Failed to update profile:', responseData);
             }
         } catch (error) {
             console.error('Error updating profile:', error.message);
         }
     };
+    
 
     return (
         <main id='profile' className=' container-fluid vh-100 '>
@@ -82,7 +79,7 @@ const Profile = () => {
                     </button>
                 </h6>
                 <section className='p-5 rounded-3' style={{ backgroundColor: '#B2B2B280' }}>
-                    <form onSubmt={handleSave}>
+                    <form onSubmit={handleSave}>
                         <div className='d-flex gap-3'>
                             <div className='d-flex flex-column w-50'>
                                 <label htmlFor='post_img' className='p-4 w-100 rounded-5 bg-secondary'>
