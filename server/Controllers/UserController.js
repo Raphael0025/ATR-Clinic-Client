@@ -125,16 +125,15 @@ const loginUser = async (req, res) => {
             return res.status(401).json({ error: 'Invalid credentials' });
         }
 
-        // Compare the entered password with the hashed password in the database
-        const passwordMatch = await bcrypt.compare(password, user.password);
-
-        if (!passwordMatch) {
+        // Compare the entered password with the password in the database
+        if (password !== user.password) {
             return res.status(401).json({ error: 'Invalid credentials' });
         }
 
         // You may want to generate and send a token for authentication here
-
-        res.status(200).json({ message: 'Login successful' });
+// If the credentials are valid, generate a JWT token
+const token = generateToken(user._id, user.user_type);
+        res.status(200).json({ message: 'Login successful', token });
     } catch (error) {
         res.status(500).json({ error: 'Internal Server Error' });
     }
@@ -155,7 +154,6 @@ const updateUser = async (req, res) => {
     }
     res.status(200).json(user)
 }
-
 module.exports = {
     getUsers, 
     signupUser,

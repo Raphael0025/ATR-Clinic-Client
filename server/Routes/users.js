@@ -13,7 +13,7 @@ router.get('/:id', getUserById)
 
 router.post('/', createUser)
 
-router.post('/login', loginUser)
+router.post('/user-login', loginUser)
 
 router.delete('/:id', deleteUser)
 
