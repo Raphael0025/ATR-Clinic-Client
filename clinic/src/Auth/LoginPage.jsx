@@ -56,7 +56,7 @@ const LoginPage = () => {
         <main className='backgroundLogin container-fluid d-flex p-5 m-0 vh-100'>
             <section className='container d-flex gap-2 justify-content-between m-0 p-5'>
                 <div className='p-5 w-75'>
-                    <form className='d-flex flex-column justify-content-center gap-3 align-items-start '>
+                    <form onSubmit={handleSubmit} className='d-flex flex-column justify-content-center gap-3 align-items-start '>
                         <div>
                             <h1 className='fs-bold text-uppercase text-success border-bottom border-5 border-warning px-3'>Login</h1>
                         </div>
@@ -91,7 +91,7 @@ const LoginPage = () => {
                                 </Link>
                             </div>
                             <div className='d-flex justify-content-end w-100'>
-                                <button onClick={handleSubmit} className='btn btn-success btn-sm text-uppercase py-2 w-50'>
+                                <button type='submit' className='btn btn-success btn-sm text-uppercase py-2 w-50'>
                                     Log In
                                 </button>
                             </div>
