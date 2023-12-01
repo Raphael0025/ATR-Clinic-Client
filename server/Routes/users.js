@@ -1,5 +1,5 @@
 const express = require('express')
-const { createUser, getUserById, signupUser, getUsers, deleteUser, countNewUsersInCurrentMonth, countUsers, updateUser } = require('../Controllers/UserController')
+const { createUser, getUserById, loginUser, signupUser, getUsers, deleteUser, countNewUsersInCurrentMonth, countUsers, updateUser } = require('../Controllers/UserController')
 
 const router = express.Router()
 
@@ -13,7 +13,7 @@ router.get('/:id', getUserById)
 
 router.post('/', createUser)
 
-router.post('/signup', signupUser)
+router.post('/login', loginUser)
 
 router.delete('/:id', deleteUser)
 
