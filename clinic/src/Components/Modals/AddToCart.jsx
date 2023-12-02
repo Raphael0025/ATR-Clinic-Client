@@ -1,11 +1,18 @@
 import React, { useState, useEffect } from 'react'
 import { IconPark } from 'assets/SvgIcons'
 import { useCart } from 'Context/CartContext'
+import { useAuth } from 'Context/AuthContext';
 
 const AddToCart = () => { 
     const { itemData } = useCart()
 
+    const { user } = useAuth();
+
     const [item, setItem] = useState({
+        user_name: '',
+        phone: '',
+        address: '',
+        user_id: '',
         item_id: '',
         item_name: '',
         qty: 1,
@@ -17,11 +24,19 @@ const AddToCart = () => {
 
     useEffect(() => {
         // Update item_name, item_id, unit_price when itemData changes
-        setItem((prevItem) => ({ ...prevItem, item_name: itemData.item_name, item_id: itemData._id, unit_price: itemData.unit_price, }));
+        setItem((prevItem) => ({ ...prevItem, 
+            item_name: itemData.item_name, 
+            item_id: itemData._id, 
+            unit_price: itemData.unit_price, 
+            user_name: user.user_name,
+            phone: user.phone,
+            address: user.address,
+            user_id: user._id,
+        }));
     
         // Update total_amount whenever qty or unit_price changes
         setItem((prevItem) => ({ ...prevItem, total_amount: prevItem.qty * prevItem.unit_price, }));
-    }, [itemData, item.qty, item.unit_price]);
+    }, [itemData, item.qty, item.unit_price, user.user_name, user.phone, user.address, user._id]);
     
     const handleDecrement = () => { 
         setItem((prevItem) => ({ ...prevItem, qty: Math.max(1, prevItem.qty - 1) }))
@@ -53,6 +68,10 @@ const AddToCart = () => {
         if(!response.ok){
             alert('Cart Item Not Uploaded')
             setItem({
+                user_name: '',
+                phone: '',
+                address: '',
+                user_id: '',
                 item_name: '',
                 qty: 1,
                 unit_price: 1,
@@ -64,6 +83,10 @@ const AddToCart = () => {
         if(response.ok){
             alert('Cart Item Uploaded')
             setItem({
+                user_name: '',
+                phone: '',
+                address: '',
+                user_id: '',
                 item_name: '',
                 qty: 1,
                 unit_price: 1,
