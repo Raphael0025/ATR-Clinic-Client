@@ -1,5 +1,4 @@
 {
-  "proxy": "https://clinic-api-two.vercel.app",
   "name": "clinic",
   "version": "0.1.0",
   "private": true,
