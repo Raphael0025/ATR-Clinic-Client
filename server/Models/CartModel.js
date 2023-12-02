@@ -2,13 +2,6 @@ const mongoose = require('mongoose')
 const { Schema, ObjectId } = mongoose;
 
 const CartSchema = new Schema({
-    user_id: {
-        type: ObjectId,
-        unique: false
-    },
-    user_name: String,
-    address: String,
-    phone: String,
     item_id:{
         type: ObjectId,
         unique: false
@@ -39,7 +32,23 @@ const CartSchema = new Schema({
     total_amount: {
         type: Number,
         default: 0
-    }
+    },
+    user_id: {
+        type: ObjectId,
+        unique: false
+    },
+    user_name: {
+        type: String,
+        unique: false
+    },
+    address: {
+        type: String,
+        unique: false
+    },
+    phone: {
+        type: String,
+        unique: false
+    },
 }, { timestamps: true })
 
 module.exports = mongoose.model('Cart', CartSchema, 'cart_db') 
