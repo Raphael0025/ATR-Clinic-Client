@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { IconPark } from 'assets/SvgIcons'
 import { useCart } from 'Context/CartContext'
- 
+
 const AddToCart = () => { 
     const { itemData } = useCart()
 

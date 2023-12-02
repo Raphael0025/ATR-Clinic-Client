@@ -8,8 +8,25 @@ const Profile = () => {
     const { user } = useAuth();
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
-        ...user, // Initialize formData with user data
+        post_img: '', // Initialize with an empty string or default value
+        first_name: '',
+        last_name: '',
+        user_name: '',
+        email: '',
+        password: ''
     });
+
+    useEffect(() => {
+        if (user) {
+            setFormData({
+                first_name: user.first_name || '',
+                last_name: user.last_name || '',
+                user_name: user.user_name || '',
+                email: user.email || '',
+                password: user.password || '',
+            });
+        }
+    }, [user]);
 
     const convertToBase64 = (file) => {
         return new Promise((resolve, reject) => {
@@ -34,11 +51,10 @@ const Profile = () => {
         }));
     };
 
-    const handleInputChange = (e) => {
-        const { id, value } = e.target;
-        setFormData((prevData) => ({
-            ...prevData,
-            [id]: value,
+    const handleInputChange = (field, value) => {
+        setFormData((prevFormData) => ({
+            ...prevFormData,
+            [field]: value,
         }));
     };
 
@@ -66,7 +82,7 @@ const Profile = () => {
     
 
     return (
-        <main id='profile' className=' container-fluid vh-100 '>
+        <main id='profile' className='container-fluid vh-100'>
             <section className='opaque-background rounded-2 container px-3 py-4 d-flex flex-column gap-4'>
                 <h6 className='m-0 fw-bold text-warning d-flex justify-content-between'>
                     <span>Profile</span>{' '}
@@ -95,73 +111,72 @@ const Profile = () => {
                                     accept='.jpeg, .png, .jpg'
                                 />
                             </div>
-                            {user && (
-                                <>
-                                    <div className='d-flex flex-column justify-content-end w-100'>
-                                        <label htmlFor='first_name'>First Name</label>
-                                        <input
-                                            type='text'
-                                            className='p-2 rounded-3'
-                                            id='first_name'
-                                            placeholder='First Name'
-                                            value={formData.first_name || ''}
-                                            onChange={handleInputChange}
-                                        />
-                                    </div>
-                                    <div className='d-flex flex-column justify-content-end w-100'>
-                                        <label htmlFor='last_name'>Last Name</label>
-                                        <input
-                                            type='text'
-                                            className='p-2 rounded-3'
-                                            id='last_name'
-                                            placeholder='Last Name'
-                                            value={formData.last_name || ''}
-                                            onChange={handleInputChange}
-                                        />
-                                    </div>
-                                    {/* Continue with other form fields using the user data */}
-                                </>
-                            )}
+                            
+                            <>
+                            <div className='d-flex flex-column justify-content-end w-100'>
+                                <label htmlFor='first_name'>First Name</label>
+                                <input
+                                    type='text'
+                                    className='p-2 rounded-3'
+                                    id='first_name'
+                                    placeholder='First Name'
+                                    value={formData.first_name}
+                                    onChange={(e) => handleInputChange('first_name', e.target.value)}
+                                />
+                            </div>
+                            <div className='d-flex flex-column justify-content-end w-100'>
+                                <label htmlFor='last_name'>Last Name</label>
+                                <input
+                                    type='text'
+                                    className='p-2 rounded-3'
+                                    id='last_name'
+                                    placeholder='Last Name'
+                                    value={formData.last_name}
+                                    onChange={(e) => handleInputChange('last_name', e.target.value)}
+                                />
+                            </div>
+                            {/* Continue with other form fields using the user data */}
+                            </>
                         </div>
 
                         {/* Continue with other form fields using the user data */}
-                        {user && (
-                            <div className='d-flex gap-3'>
-                                <div className='d-flex flex-column w-100'>
-                                    <label htmlFor='user_name'>User Name</label>
-                                    <input
-                                        type='text'
-                                        className='p-2 rounded-3'
-                                        id='user_name'
-                                        placeholder='User Name'
-                                        value={formData.user_name || ''}
-                                        onChange={handleInputChange}
-                                    />
-                                </div>
-                                <div className='d-flex flex-column w-100'>
-                                    <label htmlFor='email'>Email</label>
-                                    <input
-                                        type='email'
-                                        className='p-2 rounded-3'
-                                        id='email'
-                                        placeholder='Email'
-                                        value={formData.email || ''}
-                                        onChange={handleInputChange}
-                                    />
-                                </div>
-                                <div className='d-flex flex-column w-100'>
-                                    <label htmlFor='password'>Password</label>
-                                    <input
-                                        type='password'
-                                        className='p-2 rounded-3'
-                                        id='password'
-                                        placeholder='Password'
-                                        value={formData.password || ''}
-                                        onChange={handleInputChange}
-                                    />
-                                </div>
+                        
+                        <div className='d-flex gap-3'>
+                            <div className='d-flex flex-column w-100'>
+                                <label htmlFor='user_name'>User Name</label>
+                                <input
+                                    type='text'
+                                    className='p-2 rounded-3'
+                                    id='user_name'
+                                    placeholder='User Name'
+                                    value={formData.user_name}
+                                    onChange={(e) => handleInputChange('user_name', e.target.value)}
+                                />
                             </div>
-                        )}
+                            <div className='d-flex flex-column w-100'>
+                                <label htmlFor='email'>Email</label>
+                                <input
+                                    type='email'
+                                    className='p-2 rounded-3'
+                                    id='email'
+                                    placeholder='Email'
+                                    value={formData.email}
+                                    onChange={(e) => handleInputChange('email', e.target.value)}
+                                />
+                            </div>
+                            <div className='d-flex flex-column w-100'>
+                                <label htmlFor='password'>Password</label>
+                                <input
+                                    type='password'
+                                    className='p-2 rounded-3'
+                                    id='password'
+                                    placeholder='Password'
+                                    value={formData.password}
+                                    onChange={(e) => handleInputChange('password', e.target.value)}
+                                />
+                            </div>
+                        </div>
+                        
 
                         <div className='w-100 d-flex justify-content-end align-items-end py-3'>
                             <button className='btn-success w-25 btn' type='submit'>Save</button>

@@ -2,6 +2,13 @@ const mongoose = require('mongoose')
 const { Schema, ObjectId } = mongoose;
 
 const CartSchema = new Schema({
+    user_id: {
+        type: ObjectId,
+        unique: false
+    },
+    user_name: String,
+    address: String,
+    phone: String,
     item_id:{
         type: ObjectId,
         unique: false

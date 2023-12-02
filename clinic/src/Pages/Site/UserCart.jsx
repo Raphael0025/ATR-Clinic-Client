@@ -5,6 +5,7 @@ import 'react-loading-skeleton/dist/skeleton.css';
 import { IconPark } from 'assets/SvgIcons'
 import { useItems } from 'Context/ItemsContext'
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from 'Context/AuthContext';
 
 const UserCart = () => {
     const [cart, setCart] = useState(null)
@@ -13,6 +14,13 @@ const UserCart = () => {
     const [selectedItems, setSelectedItems] = useState([])
     const { addItems, resetItems } = useItems()
     const navigate = useNavigate();
+    const { user } = useAuth();
+    
+    useEffect(() => {
+        if (!user) {
+            navigate('/auth/user-login');
+        }
+    }, [user, navigate]);
 
     // Function to handle checkout
     const handleCheckout = () => {
@@ -172,7 +180,7 @@ const UserCart = () => {
                                             <input type='number' min={1} className='text-center bg-light rounded-3 p-1' style={{width: '50px'}} value={item.qty} onChange={(e) => handleQuantityChange(item._id, e.target.value)} />
                                             <button type='button' className='btn btn-sm btn-outline-secondary' onClick={() => handleIncrease(item._id)} ><IconPark path={'ic:round-plus'} /></button>
                                         </div>
-                                        <span className='m-0 w-100 text-center'>Php {item.product.unit_price * item.qty}.00</span>
+                                        <span className='m-0 w-100 text-center'>Php {item.product?.unit_price * item.qty}.00</span>
                                         <span className='m-0 w-100 text-center'>{item.courier}</span>
                                         <span className='m-0 w-100 text-center text-success'>{item.shipping} <IconPark size={24} path={item.shipping === 'For Delivery' ? 'tabler:truck-delivery' : 'icon-park-outline:delivery'} /></span>
                                         <button type='button' className='btn btn-sm btn-outline-danger' onClick={() => handleDeleteItem(item._id)}>
