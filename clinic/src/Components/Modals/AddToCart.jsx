@@ -8,10 +8,6 @@ const AddToCart = () => {
   const { user } = useAuth();
 
   const [item, setItem] = useState({
-    user_name: '',
-    phone: '',
-    address: '',
-    user_id: '',
     item_id: '',
     item_name: '',
     qty: 1,
@@ -19,6 +15,10 @@ const AddToCart = () => {
     total_amount: 0,
     shipping: '',
     courier: '',
+    user_name: '',
+    phone: '',
+    address: '',
+    user_id: '',
   });
 
 
@@ -50,7 +50,7 @@ const AddToCart = () => {
       }));
     }
   }, [user]);
-  
+
   const handleDecrement = () => {
     setItem((prevItem) => ({ ...prevItem, qty: Math.max(1, prevItem.qty - 1) }));
   };
